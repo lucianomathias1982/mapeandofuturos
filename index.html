@@ -348,9 +348,16 @@ body.thanks #obrigado{display:block}
 <footer>
   <div class="wrap">
     <span>© <span id="yr"></span> Mapeando Futuros · Metodologia desenvolvida por Celso Junqueira</span>
-    <span><span data-contact>contato@seudominio.com.br</span></span>
+    <span><span data-contact>contato@mapeandofuturos.com</span></span>
   </div>
 </footer>
+
+<form name="pre-pedido" netlify netlify-honeypot="bot-field" hidden>
+  <input name="foco"><input name="nome"><input name="idade"><input name="cidade"><input name="resp_nome"><input name="resp_parentesco"><input name="email"><input name="whatsapp">
+  <textarea name="v_escolaridade"></textarea><textarea name="v_materias"></textarea><textarea name="v_atividades"></textarea><textarea name="v_profissoes"></textarea><textarea name="v_duvida"></textarea>
+  <textarea name="r_momento"></textarea><textarea name="r_trajetoria"></textarea><textarea name="r_conquistas"></textarea><textarea name="r_retomar"></textarea><input name="r_recursos">
+  <input name="perfil"><textarea name="obs"></textarea><input name="menor"><input name="valor"><input name="bot-field">
+</form>
 
 <!-- ORDER FLOW -->
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
@@ -458,9 +465,12 @@ const CONFIG = {
   checkoutEndpoint: "",            // ex.: "/.netlify/functions/create-checkout"
   prices: { vocacional: 247, retomada: 347 },   // em reais — os valores cobrados vivem na Stripe
   delivery: "em até 3 dias úteis",
-  contact: "contato@seudominio.com.br"
+  contact: "contato@mapeandofuturos.com"
 };
 /* ======================================================== */
+// Sem checkout configurado: no domínio real, o pedido vira pré-pedido (Netlify Forms) e a equipe conclui o pagamento por e-mail.
+const IS_PREVIEW = !/mapeandofuturos\.(com|netlify\.app)$/.test(location.hostname);
+const MODE = CONFIG.checkoutEndpoint ? "checkout" : (IS_PREVIEW ? "demo" : "prepedido");
 
 const $ = (s, el=document) => el.querySelector(s), $$ = (s, el=document) => [...el.querySelectorAll(s)];
 const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
@@ -485,8 +495,10 @@ function show(n){
   $$(".step-view").forEach(v => v.classList.toggle("on", +v.dataset.step === n));
   $$(".progress i").forEach((b,i) => b.classList.toggle("on", i < n));
   $("#backBtn").textContent = n === 1 ? "Cancelar" : "Voltar";
-  $("#nextBtn").textContent = n === 3 ? (CONFIG.checkoutEndpoint ? "Ir para o pagamento" : "Enviar pedido de teste") : "Continuar";
-  $("#demoNote").hidden = !!CONFIG.checkoutEndpoint;
+  $("#nextBtn").textContent = n === 3 ? ({checkout:"Ir para o pagamento",demo:"Enviar pedido de teste",prepedido:"Enviar meu pedido"})[MODE] : "Continuar";
+  $("#demoNote").hidden = MODE === "checkout";
+  $("#demoNote").textContent = MODE === "demo" ? "Modo de demonstração: o checkout ainda não está conectado. O pedido de teste não é cobrado." : "O pagamento online abre em breve. Ao enviar, você recebe em até 1 dia útil, no seu e-mail, o link seguro para concluir o pagamento — nada é cobrado agora.";
+  $(".secure").hidden = MODE !== "checkout";
   panel.scrollTop = 0;
   if (n === 3) buildSummary();
 }
@@ -542,14 +554,27 @@ $("#nextBtn").addEventListener("click", async () => {
   if (step < 3) return show(step + 1);
   const btn = $("#nextBtn"); btn.disabled = true; btn.textContent = "Preparando…";
   try {
-    if (!CONFIG.checkoutEndpoint){ await new Promise(r => setTimeout(r, 700)); return finish(); }
+    if (MODE === "demo"){ await new Promise(r => setTimeout(r, 700)); return finish(); }
+    if (MODE === "prepedido"){
+      const body = new URLSearchParams({"form-name":"pre-pedido", ...Object.fromEntries(Object.entries(data()).map(([k,v])=>[k,String(v)]))});
+      const res = await fetch("/", {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body});
+      if (!res.ok) throw new Error("form");
+      return finish();
+    }
     const res = await fetch(CONFIG.checkoutEndpoint, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(data())});
     const j = await res.json();
     if (!res.ok || !j.url) throw new Error(j.error || "Falha ao abrir o checkout");
     location.href = j.url;
   } catch(e){ err(3, "Não foi possível abrir o pagamento agora. Tente novamente em instantes."); btn.disabled = false; show(3); }
 });
-function finish(){ close(); form.reset(); location.hash = "obrigado"; route(); }
+function finish(){
+  if (MODE === "prepedido"){
+    $("#obrigado .eyebrow").textContent = "Pedido recebido";
+    $("#obrigado h2").textContent = "Seu pedido chegou até nós.";
+    $("#obrigado p.muted").textContent = "Em até 1 dia útil você recebe, no e-mail informado, o link seguro para concluir o pagamento. Depois dele, o seu Mapa chega " + CONFIG.delivery + ".";
+  }
+  close(); form.reset(); location.hash = "obrigado"; route();
+}
 function route(){ const t = location.hash === "#obrigado"; document.body.classList.toggle("thanks", t); if (t) scrollTo(0,0); }
 addEventListener("hashchange", route); route();
 $("#backHome").addEventListener("click", () => { document.body.classList.remove("thanks"); });
