@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapeando Futuros — Mapa de Potenciais e Caminhos</title>
+<meta name="description" content="Mapa de Potenciais e Caminhos: orientação vocacional e Caminho da Retomada. Metodologia desenvolvida por Celso Junqueira.">
+<link rel="icon" href="assets/logo-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --surface-100:#F7F3EC;--surface-200:#EFE8DC;--surface-card:#FFFDF9;
+  --ink:#12233F;--ink-muted:#5B6472;--line:#DDD5C7;--on-ink:#fff;
+  --aurora:#E8833A;--aurora-text:#9E4A12;--aurora-soft:#FBE3CF;
+  --horizonte:#2F5D8A;--horizonte-soft:#DDE7F1;--salvia:#3F6B58;--salvia-soft:#DCE8E1;--danger:#A8322D;
+  --r-sm:8px;--r-md:16px;--r-pill:999px;
+  --serif:"Fraunces",Georgia,serif;--sans:"Manrope",system-ui,-apple-system,sans-serif;
+  --shadow:0 1px 2px rgba(18,35,63,.06),0 8px 24px rgba(18,35,63,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--surface-100);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+.eyebrow{font:700 12px/16px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--aurora-text)}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(40px,8vw,72px);line-height:1.02}
+h2{font-size:clamp(30px,5vw,44px);line-height:1.1}
+h3{font-size:26px;line-height:1.2}
+em{font-style:italic;color:var(--aurora-text)}
+.muted{color:var(--ink-muted)}
+.btn{font:700 16px/1 var(--sans);min-height:52px;padding:0 26px;border-radius:var(--r-pill);border:1.5px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;text-decoration:none;transition:transform .15s,background .15s}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--ink);color:var(--on-ink)}
+.btn-primary:hover{background:#1c3360}
+.btn-ghost{background:transparent;color:var(--ink)}
+.btn-ghost:hover{background:var(--surface-200)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--aurora);outline-offset:3px}
+
+/* header */
+header.top{position:sticky;top:0;z-index:20;background:rgba(247,243,236,.88);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.top.scrolled{border-color:var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand svg{width:36px;height:36px}
+.brand b{font:500 19px/1 var(--serif)}
+.top nav{display:flex;gap:22px;align-items:center}
+.top nav a.l{text-decoration:none;font-weight:600;font-size:15px;color:var(--ink-muted)}
+.top nav a.l:hover{color:var(--ink)}
+.top .btn{min-height:42px;padding:0 18px;font-size:14px;white-space:nowrap}
+@media(max-width:420px){.top .btn .lg{display:none}.brand b{font-size:17px}}
+@media(max-width:720px){.top nav a.l{display:none}}
+
+/* hero */
+.hero{padding:40px 0 24px;position:relative;overflow:hidden}
+.hero-grid{display:grid;gap:32px;align-items:center}
+.hero p.lead{font-size:19px;max-width:520px;color:var(--ink-muted);margin:20px 0 28px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero-media{position:relative;border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/3;background:linear-gradient(180deg,#F3D9BF 0%,#EBC9A2 38%,#9FB7A8 72%,#4F6F66 100%)}
+.hero-media img{width:100%;height:100%;object-fit:cover}
+.hero-media .pin{position:absolute;right:18px;bottom:18px;background:var(--surface-card);border-radius:var(--r-pill);padding:10px 16px 10px 12px;display:flex;gap:10px;align-items:center;font-size:14px;font-weight:600;box-shadow:var(--shadow)}
+.hero-media .pin svg{width:22px;height:22px}
+.signature{margin-top:28px;font-size:14px;color:var(--ink-muted);display:flex;align-items:center;gap:10px}
+.signature:before{content:"";width:28px;height:1px;background:var(--line)}
+@media(min-width:900px){.hero{padding:72px 0 48px}.hero-grid{grid-template-columns:1.05fr 1fr;gap:56px}.hero-media{aspect-ratio:5/6}}
+.contours{position:absolute;inset:auto -10% -40px -10%;height:260px;pointer-events:none;opacity:.9;z-index:-1}
+
+/* sections */
+section{padding:64px 0}
+.section-head{max-width:640px;margin-bottom:36px}
+.section-head p{color:var(--ink-muted);margin:14px 0 0}
+
+/* focus cards */
+.focus-grid{display:grid;gap:18px}
+@media(min-width:820px){.focus-grid{grid-template-columns:1fr 1fr;gap:24px}}
+.focus{border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface-card);overflow:hidden;display:flex;flex-direction:column}
+.focus .ph{aspect-ratio:16/9;background:var(--surface-200);position:relative}
+.focus .ph img{width:100%;height:100%;object-fit:cover}
+.focus.voc .ph{background:linear-gradient(160deg,#DDE7F1,#9DB6CF)}
+.focus.ret .ph{background:linear-gradient(160deg,#F3DCC4,#9FBAA9)}
+.focus .body{padding:24px;display:flex;flex-direction:column;gap:12px;flex:1}
+.focus.voc .eyebrow{color:var(--horizonte)}
+.focus.ret .eyebrow{color:var(--salvia)}
+.focus .quote{font:italic 400 20px/1.35 var(--serif);color:var(--ink)}
+.focus ul{margin:4px 0 8px;padding:0;list-style:none;display:grid;gap:8px}
+.focus li{padding-left:26px;position:relative;font-size:16px;color:var(--ink-muted)}
+.focus li:before{content:"";position:absolute;left:4px;top:9px;width:10px;height:10px;border-radius:50%;border:2px solid currentColor}
+.focus.voc li:before{color:var(--horizonte)}.focus.ret li:before{color:var(--salvia)}
+.price{display:flex;align-items:baseline;gap:8px;margin-top:auto;padding-top:8px;border-top:1px solid var(--line)}
+.price b{font:500 32px/1 var(--serif)}
+.price span{font-size:14px;color:var(--ink-muted)}
+.focus .btn{width:100%}
+
+/* steps */
+.steps{display:grid;gap:14px;counter-reset:s}
+@media(min-width:820px){.steps{grid-template-columns:repeat(4,1fr);gap:20px}}
+.step{position:relative;padding:22px;border-radius:var(--r-md);background:var(--surface-card);border:1px solid var(--line)}
+.step:before{counter-increment:s;content:"0" counter(s);font:500 14px/1 var(--sans);letter-spacing:.1em;color:var(--aurora-text)}
+.step h3{font-size:21px;margin:12px 0 6px}
+.step p{margin:0;font-size:15px;color:var(--ink-muted);line-height:1.5}
+
+/* map contents */
+.band{background:var(--ink);color:#F3EEE5;border-radius:24px;padding:40px 24px;position:relative;overflow:hidden}
+.band .eyebrow{color:#F09A55}
+.band h2{color:#fff}
+.band p{color:#C4CCD8}
+.band-grid{display:grid;gap:28px;align-items:center}
+@media(min-width:900px){.band{padding:64px}.band-grid{grid-template-columns:1fr 1fr;gap:56px}}
+.contents{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.contents li{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid #2A3B57}
+.contents li:last-child{border:0}
+.contents li b{display:block;color:#fff;font-weight:600}
+.contents li span{font-size:15px;color:#A9B3C2}
+.contents .n{font:500 15px/1.6 var(--serif);color:#F09A55}
+.band-media{border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/5;background:#16263F}
+.band-media img{width:100%;height:100%;object-fit:cover}
+
+/* author */
+.author{display:grid;gap:24px;align-items:center}
+@media(min-width:820px){.author{grid-template-columns:200px 1fr;gap:48px}}
+.author .stat{font:400 44px/1 var(--serif);margin-top:18px}.author .stat small{display:block;font:600 13px/1.4 var(--sans);color:var(--ink-muted);letter-spacing:.04em;margin-top:6px}
+.author .mono{width:160px;height:160px;border-radius:50%;background:var(--surface-200);display:grid;place-items:center;font:400 54px/1 var(--serif);color:var(--ink);border:1px solid var(--line)}
+.author blockquote{margin:0;font:300 clamp(24px,3.4vw,32px)/1.3 var(--serif)}
+
+/* faq */
+details{border-bottom:1px solid var(--line);padding:18px 0}
+summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";font:400 24px/1 var(--serif);color:var(--aurora-text)}
+details[open] summary:after{content:"–"}
+details p{margin:10px 0 0;color:var(--ink-muted)}
+
+footer{padding:48px 0 40px;border-top:1px solid var(--line);margin-top:40px;font-size:14px;color:var(--ink-muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+
+/* order flow */
+.sheet{position:fixed;inset:0;z-index:50;display:none;background:rgba(14,26,47,.45)}
+.sheet.open{display:block}
+.panel{position:absolute;inset:0;background:var(--surface-100);overflow:auto;-webkit-overflow-scrolling:touch}
+@media(min-width:820px){.panel{inset:24px auto 24px 50%;transform:translateX(-50%);width:680px;border-radius:24px;box-shadow:0 24px 80px rgba(0,0,0,.25)}}
+.panel-head{position:sticky;top:0;background:var(--surface-100);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);z-index:2}
+.progress{display:flex;gap:6px;flex:1;margin-right:16px}
+.progress i{height:4px;flex:1;border-radius:4px;background:var(--line)}
+.progress i.on{background:var(--ink)}
+.x{background:none;border:0;font-size:28px;line-height:1;cursor:pointer;color:var(--ink);width:44px;height:44px}
+.panel-body{padding:24px 20px 120px}
+@media(min-width:820px){.panel-body{padding:32px 40px 120px}}
+.panel-foot{position:sticky;bottom:0;background:var(--surface-100);padding:14px 20px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:flex;gap:10px}
+.panel-foot .btn{flex:1}
+.step-view{display:none}.step-view.on{display:block}
+.choice{display:grid;gap:12px;margin-top:20px}
+.choice label{display:flex;gap:14px;align-items:flex-start;padding:18px;border:1.5px solid var(--line);border-radius:var(--r-md);background:var(--surface-card);cursor:pointer}
+.choice input{margin-top:5px;accent-color:var(--ink);width:18px;height:18px}
+.choice label:has(input:checked){border-color:var(--ink);box-shadow:var(--shadow)}
+.choice b{display:block;font:500 21px/1.2 var(--serif)}
+.choice small{display:block;color:var(--ink-muted);font-size:14px;margin-top:4px}
+.choice .p{margin-left:auto;font-weight:700;white-space:nowrap}
+fieldset{border:0;padding:0;margin:0 0 8px}
+legend{font:500 22px/1.2 var(--serif);margin:24px 0 12px;padding:0}
+.f{display:grid;gap:6px;margin-bottom:16px}
+.f label{font-weight:600;font-size:15px}
+.f .hint{font-size:13px;color:var(--ink-muted);margin-top:-2px}
+input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{font:400 16px/1.4 var(--sans);color:var(--ink);background:var(--surface-card);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:13px 14px;width:100%}
+textarea{min-height:110px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink)}
+.row2{display:grid;gap:12px}
+@media(min-width:600px){.row2{grid-template-columns:1fr 1fr}}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:15px;margin:12px 0}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--ink);flex:none}
+.err{color:var(--danger);font-size:14px;min-height:20px}
+.invalid{border-color:var(--danger)!important}
+.only-minor,.only-voc,.only-ret{display:none}
+.is-minor .only-minor,.is-voc .only-voc,.is-ret .only-ret{display:block}
+.summary{background:var(--surface-card);border:1px solid var(--line);border-radius:var(--r-md);padding:20px;margin:16px 0}
+.summary dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0;font-size:15px}
+.summary dt{color:var(--ink-muted)}.summary dd{margin:0;font-weight:600}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
+.total b{font:500 30px/1 var(--serif)}
+.secure{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--ink-muted);margin-top:12px}
+.note{background:var(--aurora-soft);border-radius:var(--r-sm);padding:12px 14px;font-size:14px;margin-top:12px}
+
+/* thank you */
+#obrigado{display:none;min-height:80vh;padding:80px 0}
+body.thanks main>*:not(#obrigado){display:none}
+body.thanks #obrigado{display:block}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio" aria-label="Mapeando Futuros — início">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M4 46c10-6 18-2 26-6s14-14 30-12" stroke="#12233F" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/><path d="M4 56c12-5 22 0 32-5s14-10 24-9" stroke="#12233F" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/><path d="M4 34c8-4 13-1 19-5S31 14 44 12" stroke="#12233F" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/><path d="M8 58C16 50 18 42 28 38s6-5 7-8" stroke="#12233F" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 5"/><circle cx="42" cy="22" r="12" stroke="#12233F" stroke-width="2.4"/><circle cx="42" cy="22" r="6.5" stroke="#12233F" stroke-width="2.4"/><circle cx="42" cy="22" r="2.6" fill="#E8833A"/><circle cx="8" cy="58" r="2.2" fill="#12233F"/></svg>
+      <b>Mapeando Futuros</b>
+    </a>
+    <nav>
+      <a class="l" href="#caminhos">Caminhos</a>
+      <a class="l" href="#como-funciona">Como funciona</a>
+      <a class="l" href="#duvidas">Dúvidas</a>
+      <button class="btn btn-primary" data-open><span class="lg">Solicitar meu&nbsp;</span>Mapa</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <svg class="contours" viewBox="0 0 1200 260" preserveAspectRatio="none" fill="none" aria-hidden="true">
+    <path d="M0 200C200 150 330 220 520 180S860 60 1200 110" stroke="#DDD5C7" stroke-width="1.5"/>
+    <path d="M0 236C220 200 360 250 560 214S900 120 1200 150" stroke="#DDD5C7" stroke-width="1.5"/>
+    <path d="M0 160C180 110 300 170 480 140S820 20 1200 70" stroke="#DDD5C7" stroke-width="1.5"/>
+  </svg>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Mapa de Potenciais e Caminhos</p>
+      <h1 style="margin-top:14px">Saiba onde você está.<br><em>Veja para onde pode ir.</em></h1>
+      <p class="lead">Uma análise integrada das suas habilidades, talentos, história e perfil — traduzida em caminhos reais, para escolher uma carreira ou para retomar a própria vida.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#caminhos">Escolher meu caminho →</a>
+        <a class="btn btn-ghost" href="#como-funciona">Como funciona</a>
+      </div>
+      <p class="signature">Metodologia desenvolvida por Celso Junqueira</p>
+    </div>
+    <div class="hero-media">
+      <img src="assets/hero.jpg" alt="Trilha atravessando campos em direção ao horizonte ao amanhecer" onerror="this.remove()">
+      <div class="pin"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#12233F" stroke-width="2"/><circle cx="12" cy="12" r="4.5" stroke="#12233F" stroke-width="2"/><circle cx="12" cy="12" r="1.8" fill="#E8833A"/></svg>Você está aqui</div>
+    </div>
+  </div>
+</section>
+
+<section id="caminhos">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Dois caminhos, um mesmo método</p>
+      <h2 style="margin-top:12px">Por onde você quer começar?</h2>
+      <p>As duas opções entregam o seu Mapa de Potenciais e Caminhos. O que muda é a pergunta que ele responde.</p>
+    </div>
+    <div class="focus-grid">
+      <article class="focus voc">
+        <div class="ph"><img src="assets/vocacional.jpg" alt="Estudante de costas diante de uma janela, com um caderno aberto" onerror="this.remove()"></div>
+        <div class="body">
+          <p class="eyebrow">Vocacional</p>
+          <h3>Escolher uma formação ou direção profissional</h3>
+          <p class="quote">“O que eu faço bem, do que eu gosto — e onde isso cabe no mundo?”</p>
+          <ul>
+            <li>Para estudantes do fundamental e do médio, e quem vai escolher a primeira graduação</li>
+            <li>Conecta aptidões e interesses a áreas, cursos e profissões possíveis</li>
+            <li>Reduz a ansiedade da escolha com critérios claros</li>
+          </ul>
+          <div class="price"><b data-price="vocacional">R$ 247</b><span>pagamento único</span></div>
+          <button class="btn btn-primary" data-open="vocacional">Solicitar meu Mapa</button>
+        </div>
+      </article>
+      <article class="focus ret">
+        <div class="ph"><img src="assets/retomada.jpg" alt="Adulto caminhando por uma trilha ao nascer do sol" onerror="this.remove()"></div>
+        <div class="body">
+          <p class="eyebrow">Caminho da Retomada</p>
+          <h3>Retomar a iniciativa na própria vida</h3>
+          <p class="quote">“Voltar a fazer planos. Voltar ao caminho dos bons resultados.”</p>
+          <ul>
+            <li>Para quem passou por perdas, frustrações ou mudanças e não sabe por onde recomeçar</li>
+            <li>Evidencia qualidades e potenciais que continuam aí</li>
+            <li>Termina com um roteiro prático de primeiros passos</li>
+          </ul>
+          <div class="price"><b data-price="retomada">R$ 347</b><span>pagamento único</span></div>
+          <button class="btn btn-primary" data-open="retomada">Solicitar meu Mapa</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Como funciona</p>
+      <h2 style="margin-top:12px">Quatro passos. Nenhum deles é complicado.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Escolha o foco</h3><p>Vocacional ou Caminho da Retomada.</p></div>
+      <div class="step"><h3>Conte sua história</h3><p>Um formulário de cerca de 15 minutos, no seu ritmo.</p></div>
+      <div class="step"><h3>Confirme o pedido</h3><p>Pagamento seguro por cartão, processado pela Stripe.</p></div>
+      <div class="step"><h3>Receba seu Mapa</h3><p>O PDF chega no seu e-mail <span data-delivery>em até 3 dias úteis</span>, revisado pessoalmente.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="band">
+      <div class="band-grid">
+        <div>
+          <p class="eyebrow">O que vem no seu Mapa</p>
+          <h2 style="margin:12px 0 18px">Um documento para guardar, reler e usar.</h2>
+          <ol class="contents">
+            <li><span class="n">I</span><div><b>Retrato de potenciais</b><span>Habilidades, talentos naturais e o que a sua história já provou.</span></div></li>
+            <li><span class="n">II</span><div><b>Perfil de comportamento</b><span>Como você decide, aprende e se relaciona — e onde isso rende mais.</span></div></li>
+            <li><span class="n">III</span><div><b>Caminhos possíveis</b><span>Três direções concretas, com prós, exigências e primeiros sinais de encaixe.</span></div></li>
+            <li><span class="n">IV</span><div><b>Plano dos próximos 90 dias</b><span>Passos pequenos, datáveis, que tiram o plano do papel.</span></div></li>
+          </ol>
+        </div>
+        <div class="band-media"><img src="assets/mapa.jpg" alt="Documento do Mapa impresso sobre uma mesa de madeira" onerror="this.remove()"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="autor">
+  <div class="wrap author">
+    <div><div class="mono" aria-hidden="true">CJ</div><div class="stat">200 mil+<small>análises pessoais desde 1988</small></div></div>
+    <div>
+      <p class="eyebrow">Quem desenvolveu · Celso Junqueira</p>
+      <blockquote style="margin-top:12px">“Limitar sua curiosidade pode limitar seu conhecimento e suas possibilidades.”</blockquote>
+      <p class="muted" style="margin-top:16px">O Mapa de Potenciais e Caminhos é uma metodologia desenvolvida por <b style="color:var(--ink)">Celso Junqueira</b>. <span data-bio>Paulista, formado em Direito, Celso dedica-se desde 1988 às análises pessoais para o autoconhecimento — são mais de 200.000 realizadas ao longo de mais de três décadas. Hipnólogo e estudioso da Numerologia, criou o Mapa para levar essa escuta a duas decisões concretas: a escolha de uma carreira e a retomada da própria vida.</span></p>
+    </div>
+  </div>
+</section>
+
+<section id="duvidas">
+  <div class="wrap" style="max-width:760px">
+    <div class="section-head"><p class="eyebrow">Dúvidas</p><h2 style="margin-top:12px">Antes de pedir</h2></div>
+    <details><summary>O Mapa é um teste psicológico?</summary><p>Não. É uma análise de orientação e desenvolvimento a partir das informações que você compartilha. Não substitui acompanhamento psicológico, psiquiátrico ou médico.</p></details>
+    <details><summary>Meu filho é menor de idade. Como funciona?</summary><p>O pedido é feito pelo responsável legal, que preenche o formulário junto com o estudante e autoriza o uso das informações para a elaboração do Mapa.</p></details>
+    <details><summary>Em quanto tempo recebo?</summary><p>O PDF chega no e-mail informado <span data-delivery>em até 3 dias úteis</span> após a confirmação do pagamento.</p></details>
+    <details><summary>Meus dados ficam seguros?</summary><p>Usamos suas respostas apenas para elaborar o seu Mapa. Não vendemos nem compartilhamos dados, e você pode pedir a exclusão a qualquer momento.</p></details>
+    <details><summary>E se eu me arrepender?</summary><p>Você pode cancelar em até 7 dias após a compra, com reembolso integral, conforme o Código de Defesa do Consumidor.</p></details>
+  </div>
+</section>
+
+<section id="obrigado">
+  <div class="wrap" style="max-width:640px;text-align:center">
+    <svg viewBox="0 0 64 64" width="72" height="72" fill="none" style="margin:0 auto 24px" aria-hidden="true"><circle cx="32" cy="32" r="22" stroke="#12233F" stroke-width="2.4"/><circle cx="32" cy="32" r="12" stroke="#12233F" stroke-width="2.4"/><circle cx="32" cy="32" r="4.5" fill="#E8833A"/></svg>
+    <p class="eyebrow">Pedido confirmado</p>
+    <h2 style="margin:12px 0 16px">Seu mapa começou a ser traçado.</h2>
+    <p class="muted">Recebemos suas respostas e o pagamento. O seu Mapa de Potenciais e Caminhos chega no seu e-mail <span data-delivery>em até 3 dias úteis</span>. Se não encontrar, confira a caixa de spam.</p>
+    <a class="btn btn-ghost" href="#inicio" style="margin-top:24px" id="backHome">Voltar ao início</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> Mapeando Futuros · Metodologia desenvolvida por Celso Junqueira</span>
+    <span><span data-contact>contato@seudominio.com.br</span></span>
+  </div>
+</footer>
+
+<!-- ORDER FLOW -->
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="panel">
+    <div class="panel-head">
+      <div class="progress" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+      <button class="x" data-close aria-label="Fechar">×</button>
+    </div>
+    <form class="panel-body" id="orderForm" novalidate>
+      <!-- 1. foco -->
+      <div class="step-view on" data-step="1">
+        <p class="eyebrow">Passo 1 de 3</p>
+        <h2 id="sheetTitle" style="margin-top:8px;font-size:32px">Qual é o foco do seu Mapa?</h2>
+        <div class="choice">
+          <label><input type="radio" name="foco" value="vocacional"><span><b>Vocacional</b><small>Escolher uma formação ou direção profissional</small></span><span class="p" data-price="vocacional">R$ 247</span></label>
+          <label><input type="radio" name="foco" value="retomada"><span><b>Caminho da Retomada</b><small>Voltar a fazer planos e retomar a iniciativa</small></span><span class="p" data-price="retomada">R$ 347</span></label>
+        </div>
+        <p class="err" data-err="1"></p>
+      </div>
+
+      <!-- 2. dados -->
+      <div class="step-view" data-step="2">
+        <p class="eyebrow">Passo 2 de 3</p>
+        <h2 style="margin-top:8px;font-size:32px">Conte um pouco sobre você</h2>
+        <p class="muted" style="margin:8px 0 0">Responda com calma e com sinceridade: quanto mais concreto, mais preciso o Mapa.</p>
+
+        <fieldset>
+          <legend>Quem vai receber o Mapa</legend>
+          <div class="f"><label for="nome">Nome completo do participante</label><input id="nome" name="nome" type="text" autocomplete="name" required></div>
+          <div class="row2">
+            <div class="f"><label for="idade">Idade</label><input id="idade" name="idade" type="number" min="10" max="99" inputmode="numeric" required></div>
+            <div class="f"><label for="cidade">Cidade / UF</label><input id="cidade" name="cidade" type="text" autocomplete="address-level2"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="only-minor">
+          <legend>Responsável legal</legend>
+          <p class="hint muted" style="margin:-4px 0 12px;font-size:14px">Para participantes com menos de 18 anos, o pedido é feito pelo responsável.</p>
+          <div class="f"><label for="resp_nome">Nome do responsável</label><input id="resp_nome" name="resp_nome" type="text" data-minor-required></div>
+          <div class="f"><label for="resp_parentesco">Parentesco</label><select id="resp_parentesco" name="resp_parentesco" data-minor-required><option value="">Selecione</option><option>Mãe</option><option>Pai</option><option>Tutor(a) legal</option><option>Outro responsável legal</option></select></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Contato para envio</legend>
+          <div class="row2">
+            <div class="f"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required><span class="hint">O PDF será enviado para este endereço.</span></div>
+            <div class="f"><label for="whatsapp">WhatsApp</label><input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="(11) 90000-0000"></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="only-voc">
+          <legend>Escola e interesses</legend>
+          <div class="f"><label for="v_escolaridade">Série / etapa atual</label><select id="v_escolaridade" name="v_escolaridade"><option value="">Selecione</option><option>8º ou 9º ano do fundamental</option><option>1º ano do médio</option><option>2º ano do médio</option><option>3º ano do médio</option><option>Cursinho / já concluiu o médio</option><option>Graduação em andamento</option></select></div>
+          <div class="f"><label for="v_materias">Matérias de que mais gosta e em que vai melhor</label><textarea id="v_materias" name="v_materias"></textarea></div>
+          <div class="f"><label for="v_atividades">O que faz no tempo livre que faz o tempo passar rápido?</label><textarea id="v_atividades" name="v_atividades"></textarea></div>
+          <div class="f"><label for="v_profissoes">Profissões ou cursos que já passaram pela sua cabeça (e por quê)</label><textarea id="v_profissoes" name="v_profissoes"></textarea></div>
+          <div class="f"><label for="v_duvida">O que mais trava a sua escolha hoje?</label><textarea id="v_duvida" name="v_duvida"></textarea></div>
+        </fieldset>
+
+        <fieldset class="only-ret">
+          <legend>Sua trajetória</legend>
+          <div class="f"><label for="r_momento">Como você descreveria o seu momento atual?</label><textarea id="r_momento" name="r_momento"></textarea></div>
+          <div class="f"><label for="r_trajetoria">Principais experiências de trabalho e estudo até aqui</label><textarea id="r_trajetoria" name="r_trajetoria"></textarea></div>
+          <div class="f"><label for="r_conquistas">Três coisas que você já fez bem e das quais se orgulha</label><textarea id="r_conquistas" name="r_conquistas"></textarea></div>
+          <div class="f"><label for="r_retomar">O que você quer retomar ou construir nos próximos meses?</label><textarea id="r_retomar" name="r_retomar"></textarea></div>
+          <div class="f"><label for="r_recursos">Tempo e recursos que você tem disponíveis hoje</label><input id="r_recursos" name="r_recursos" type="text" placeholder="Ex.: 10 horas por semana, sem investimento inicial"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Para fechar</legend>
+          <div class="f"><label for="perfil">Como as pessoas próximas descreveriam você em três palavras?</label><input id="perfil" name="perfil" type="text"></div>
+          <div class="f"><label for="obs">Algo mais que seja importante sabermos?</label><textarea id="obs" name="obs" style="min-height:80px"></textarea></div>
+        </fieldset>
+        <p class="err" data-err="2"></p>
+      </div>
+
+      <!-- 3. revisão e pagamento -->
+      <div class="step-view" data-step="3">
+        <p class="eyebrow">Passo 3 de 3</p>
+        <h2 style="margin-top:8px;font-size:32px">Revise e confirme</h2>
+        <div class="summary">
+          <dl id="summaryList"></dl>
+          <div class="total"><span>Total</span><b id="summaryTotal">—</b></div>
+        </div>
+        <label class="check"><input type="checkbox" id="c_lgpd" required><span>Autorizo o uso das informações acima exclusivamente para a elaboração do meu Mapa de Potenciais e Caminhos, conforme a Lei Geral de Proteção de Dados.</span></label>
+        <label class="check only-minor"><input type="checkbox" id="c_resp"><span>Declaro ser o responsável legal pelo participante menor de 18 anos e autorizo sua participação.</span></label>
+        <label class="check"><input type="checkbox" id="c_ciente" required><span>Entendo que o Mapa é uma ferramenta de orientação e não substitui acompanhamento psicológico ou médico.</span></label>
+        <p class="secure"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#5B6472" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="#5B6472" stroke-width="2"/></svg>Você será levado ao checkout seguro da Stripe para concluir o pagamento.</p>
+        <div class="note" id="demoNote" hidden>Modo de demonstração: o checkout ainda não está conectado. O pedido de teste não é cobrado.</div>
+        <p class="err" data-err="3"></p>
+      </div>
+    </form>
+    <div class="panel-foot">
+      <button class="btn btn-ghost" type="button" id="backBtn">Voltar</button>
+      <button class="btn btn-primary" type="button" id="nextBtn">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===================== CONFIGURAÇÃO ===================== */
+const CONFIG = {
+  // Endpoint que cria a sessão de checkout na Stripe (Netlify Function incluída no pacote).
+  // Deixe vazio para modo de demonstração.
+  checkoutEndpoint: "",            // ex.: "/.netlify/functions/create-checkout"
+  prices: { vocacional: 247, retomada: 347 },   // em reais — os valores cobrados vivem na Stripe
+  delivery: "em até 3 dias úteis",
+  contact: "contato@seudominio.com.br"
+};
+/* ======================================================== */
+
+const $ = (s, el=document) => el.querySelector(s), $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
+$$("[data-price]").forEach(el => el.textContent = brl(CONFIG.prices[el.dataset.price]));
+$$("[data-delivery]").forEach(el => el.textContent = CONFIG.delivery);
+$$("[data-contact]").forEach(el => el.textContent = CONFIG.contact);
+$("#yr").textContent = new Date().getFullYear();
+addEventListener("scroll", () => $("#top").classList.toggle("scrolled", scrollY > 8), {passive:true});
+
+const sheet = $("#sheet"), form = $("#orderForm"), panel = $(".panel");
+let step = 1;
+function setFoco(v){ const r = $(`input[name=foco][value=${v}]`); if(r){ r.checked = true; } syncMode(); }
+function syncMode(){
+  const foco = (form.foco.value || "");
+  const idade = parseInt(form.idade.value, 10);
+  form.classList.toggle("is-voc", foco === "vocacional");
+  form.classList.toggle("is-ret", foco === "retomada");
+  form.classList.toggle("is-minor", !isNaN(idade) && idade < 18);
+}
+function show(n){
+  step = n;
+  $$(".step-view").forEach(v => v.classList.toggle("on", +v.dataset.step === n));
+  $$(".progress i").forEach((b,i) => b.classList.toggle("on", i < n));
+  $("#backBtn").textContent = n === 1 ? "Cancelar" : "Voltar";
+  $("#nextBtn").textContent = n === 3 ? (CONFIG.checkoutEndpoint ? "Ir para o pagamento" : "Enviar pedido de teste") : "Continuar";
+  $("#demoNote").hidden = !!CONFIG.checkoutEndpoint;
+  panel.scrollTop = 0;
+  if (n === 3) buildSummary();
+}
+function open(foco){
+  sheet.classList.add("open"); document.body.style.overflow = "hidden";
+  if (foco) { setFoco(foco); show(2); } else show(1);
+  setTimeout(() => (step === 1 ? $("input[name=foco]") : $("#nome")).focus(), 50);
+}
+function close(){ sheet.classList.remove("open"); document.body.style.overflow = ""; }
+$$("[data-open]").forEach(b => b.addEventListener("click", () => open(b.dataset.open)));
+$$("[data-close]").forEach(b => b.addEventListener("click", close));
+addEventListener("keydown", e => { if (e.key === "Escape" && sheet.classList.contains("open")) close(); });
+form.addEventListener("change", syncMode); form.idade.addEventListener("input", syncMode);
+form.addEventListener("submit", e => e.preventDefault());
+
+function err(n, msg){ $(`[data-err="${n}"]`).textContent = msg || ""; }
+function validate(n){
+  $$(".invalid").forEach(el => el.classList.remove("invalid"));
+  if (n === 1){ if(!form.foco.value){ err(1,"Escolha um dos focos para continuar."); return false; } err(1); return true; }
+  if (n === 2){
+    const minor = form.classList.contains("is-minor");
+    const req = ["nome","idade","email"].map(id => $("#"+id));
+    if (minor) req.push(...$$("[data-minor-required]"));
+    const focoReq = form.foco.value === "vocacional" ? ["v_escolaridade","v_materias","v_duvida"] : ["r_momento","r_trajetoria","r_retomar"];
+    req.push(...focoReq.map(id => $("#"+id)));
+    const bad = req.filter(el => !String(el.value).trim() || (el.type === "email" && !/^\S+@\S+\.\S+$/.test(el.value)));
+    bad.forEach(el => el.classList.add("invalid"));
+    if (bad.length){ err(2,"Preencha os campos destacados."); bad[0].focus(); return false; }
+    err(2); return true;
+  }
+  if (n === 3){
+    const boxes = [$("#c_lgpd"), $("#c_ciente")]; if (form.classList.contains("is-minor")) boxes.push($("#c_resp"));
+    if (boxes.some(b => !b.checked)){ err(3,"Confirme as autorizações para seguir."); return false; }
+    err(3); return true;
+  }
+}
+function data(){
+  const o = Object.fromEntries(new FormData(form).entries());
+  o.menor = form.classList.contains("is-minor");
+  o.valor = CONFIG.prices[o.foco];
+  return o;
+}
+function buildSummary(){
+  const d = data();
+  const rows = [["Foco", d.foco === "vocacional" ? "Vocacional" : "Caminho da Retomada"],["Participante", d.nome],["Idade", d.idade],["Envio para", d.email]];
+  if (d.menor) rows.splice(2,0,["Responsável", d.resp_nome]);
+  $("#summaryList").innerHTML = rows.map(([k,v]) => `<dt>${k}</dt><dd>${String(v||"—").replace(/[<>&]/g,"")}</dd>`).join("");
+  $("#summaryTotal").textContent = brl(d.valor);
+}
+$("#backBtn").addEventListener("click", () => step === 1 ? close() : show(step - 1));
+$("#nextBtn").addEventListener("click", async () => {
+  if (!validate(step)) return;
+  if (step < 3) return show(step + 1);
+  const btn = $("#nextBtn"); btn.disabled = true; btn.textContent = "Preparando…";
+  try {
+    if (!CONFIG.checkoutEndpoint){ await new Promise(r => setTimeout(r, 700)); return finish(); }
+    const res = await fetch(CONFIG.checkoutEndpoint, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(data())});
+    const j = await res.json();
+    if (!res.ok || !j.url) throw new Error(j.error || "Falha ao abrir o checkout");
+    location.href = j.url;
+  } catch(e){ err(3, "Não foi possível abrir o pagamento agora. Tente novamente em instantes."); btn.disabled = false; show(3); }
+});
+function finish(){ close(); form.reset(); location.hash = "obrigado"; route(); }
+function route(){ const t = location.hash === "#obrigado"; document.body.classList.toggle("thanks", t); if (t) scrollTo(0,0); }
+addEventListener("hashchange", route); route();
+$("#backHome").addEventListener("click", () => { document.body.classList.remove("thanks"); });
+</script>
+</body>
+</html>

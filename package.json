@@ -1,0 +1,2 @@
+{ "name": "mapeando-futuros", "private": true, "type": "module",
+  "dependencies": { "stripe": "^17.0.0", "@netlify/blobs": "^8.0.0" } }
