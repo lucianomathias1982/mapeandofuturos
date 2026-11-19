@@ -7,16 +7,19 @@
 <meta name="description" content="Mapa de Potenciais e Caminhos: orientação vocacional e Caminho da Retomada. Metodologia desenvolvida por Celso Junqueira.">
 <link rel="icon" href="assets/logo-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --surface-100:#F7F3EC;--surface-200:#EFE8DC;--surface-card:#FFFDF9;
-  --ink:#12233F;--ink-muted:#5B6472;--line:#DDD5C7;--on-ink:#fff;
-  --aurora:#E8833A;--aurora-text:#9E4A12;--aurora-soft:#FBE3CF;
-  --horizonte:#2F5D8A;--horizonte-soft:#DDE7F1;--salvia:#3F6B58;--salvia-soft:#DCE8E1;--danger:#A8322D;
-  --r-sm:8px;--r-md:16px;--r-pill:999px;
-  --serif:"Fraunces",Georgia,serif;--sans:"Manrope",system-ui,-apple-system,sans-serif;
-  --shadow:0 1px 2px rgba(18,35,63,.06),0 8px 24px rgba(18,35,63,.06);
+  --surface-100:#F3F8FB;--surface-200:#E6F1F6;--surface-card:#FFFFFF;
+  --ink:#0E2A3B;--ink-muted:#4F6473;--line:#D3E2EA;--on-ink:#fff;
+  --sky:#8EC5E6;--sky-soft:#E1F0F9;--sky-text:#1F6E9C;
+  --mint:#4DB6A4;--mint-soft:#DDF2EC;--mint-text:#1E7466;
+  --aurora-text:#1F6E9C;--aurora-soft:#E1F0F9;
+  --horizonte:#1F6E9C;--horizonte-soft:#E1F0F9;--salvia:#1E7466;--salvia-soft:#DDF2EC;--danger:#B3261E;
+  --r-sm:12px;--r-md:24px;--r-pill:999px;
+  --serif:"Sora",system-ui,sans-serif;--sans:"Manrope",system-ui,-apple-system,sans-serif;
+  --grad:linear-gradient(100deg,#1F6E9C 0%,#1E7466 100%);
+  --shadow:0 1px 2px rgba(14,42,59,.05),0 12px 32px rgba(14,42,59,.08);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -25,23 +28,23 @@ img{max-width:100%;display:block}
 a{color:inherit}
 .wrap{width:min(1120px,100% - 40px);margin-inline:auto}
 .eyebrow{font:700 12px/16px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--aurora-text)}
-h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;margin:0}
+h1,h2,h3{font-family:var(--serif);font-weight:300;letter-spacing:-.035em;margin:0}
 h1{font-size:clamp(40px,8vw,72px);line-height:1.02}
 h2{font-size:clamp(30px,5vw,44px);line-height:1.1}
 h3{font-size:26px;line-height:1.2}
-em{font-style:italic;color:var(--aurora-text)}
+em{font-style:normal;font-weight:400;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .muted{color:var(--ink-muted)}
 .btn{font:700 16px/1 var(--sans);min-height:52px;padding:0 26px;border-radius:var(--r-pill);border:1.5px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;text-decoration:none;transition:transform .15s,background .15s}
 .btn:active{transform:scale(.98)}
 .btn-primary{background:var(--ink);color:var(--on-ink)}
-.btn-primary:hover{background:#1c3360}
+.btn-primary:hover{background:#17435C}
 .btn-ghost{background:transparent;color:var(--ink)}
 .btn-ghost:hover{background:var(--surface-200)}
 .btn[disabled]{opacity:.45;cursor:not-allowed}
-:focus-visible{outline:3px solid var(--aurora);outline-offset:3px}
+:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
 
 /* header */
-header.top{position:sticky;top:0;z-index:20;background:rgba(247,243,236,.88);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.top{position:sticky;top:0;z-index:20;background:rgba(243,248,251,.78);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
 header.top.scrolled{border-color:var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
@@ -55,13 +58,15 @@ header.top.scrolled{border-color:var(--line)}
 @media(max-width:720px){.top nav a.l{display:none}}
 
 /* hero */
-.hero{padding:40px 0 24px;position:relative;overflow:hidden}
+.hero{padding:40px 0 24px;position:relative;overflow:hidden;isolation:isolate}
+.hero:before{content:"";position:absolute;inset:-20% -10% auto auto;width:900px;height:900px;background:radial-gradient(closest-side,rgba(142,197,230,.45),transparent 70%);z-index:-1}
+.hero:after{content:"";position:absolute;left:-200px;bottom:-200px;width:700px;height:700px;background:radial-gradient(closest-side,rgba(77,182,164,.28),transparent 70%);z-index:-1}
 .hero-grid{display:grid;gap:32px;align-items:center}
 .hero p.lead{font-size:19px;max-width:520px;color:var(--ink-muted);margin:20px 0 28px}
 .hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
-.hero-media{position:relative;border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/3;background:linear-gradient(180deg,#F3D9BF 0%,#EBC9A2 38%,#9FB7A8 72%,#4F6F66 100%)}
+.hero-media{position:relative;border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/3;background:linear-gradient(180deg,#CFE6F3 0%,#A9D3E8 45%,#7FBFB2 100%)}
 .hero-media img{width:100%;height:100%;object-fit:cover}
-.hero-media .pin{position:absolute;right:18px;bottom:18px;background:var(--surface-card);border-radius:var(--r-pill);padding:10px 16px 10px 12px;display:flex;gap:10px;align-items:center;font-size:14px;font-weight:600;box-shadow:var(--shadow)}
+.hero-media .pin{position:absolute;right:18px;bottom:18px;background:rgba(255,255,255,.82);backdrop-filter:blur(8px);border-radius:var(--r-pill);padding:10px 16px 10px 12px;display:flex;gap:10px;align-items:center;font-size:14px;font-weight:600;box-shadow:var(--shadow)}
 .hero-media .pin svg{width:22px;height:22px}
 .signature{margin-top:28px;font-size:14px;color:var(--ink-muted);display:flex;align-items:center;gap:10px}
 .signature:before{content:"";width:28px;height:1px;background:var(--line)}
@@ -76,15 +81,15 @@ section{padding:64px 0}
 /* focus cards */
 .focus-grid{display:grid;gap:18px}
 @media(min-width:820px){.focus-grid{grid-template-columns:1fr 1fr;gap:24px}}
-.focus{border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface-card);overflow:hidden;display:flex;flex-direction:column}
+.focus{border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface-card);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
 .focus .ph{aspect-ratio:16/9;background:var(--surface-200);position:relative}
 .focus .ph img{width:100%;height:100%;object-fit:cover}
-.focus.voc .ph{background:linear-gradient(160deg,#DDE7F1,#9DB6CF)}
-.focus.ret .ph{background:linear-gradient(160deg,#F3DCC4,#9FBAA9)}
+.focus.voc .ph{background:linear-gradient(160deg,#E1F0F9,#8EC5E6)}
+.focus.ret .ph{background:linear-gradient(160deg,#DDF2EC,#4DB6A4)}
 .focus .body{padding:24px;display:flex;flex-direction:column;gap:12px;flex:1}
 .focus.voc .eyebrow{color:var(--horizonte)}
 .focus.ret .eyebrow{color:var(--salvia)}
-.focus .quote{font:italic 400 20px/1.35 var(--serif);color:var(--ink)}
+.focus .quote{font:400 19px/1.45 var(--serif);color:var(--ink);letter-spacing:-.01em}
 .focus ul{margin:4px 0 8px;padding:0;list-style:none;display:grid;gap:8px}
 .focus li{padding-left:26px;position:relative;font-size:16px;color:var(--ink-muted)}
 .focus li:before{content:"";position:absolute;left:4px;top:9px;width:10px;height:10px;border-radius:50%;border:2px solid currentColor}
@@ -103,33 +108,33 @@ section{padding:64px 0}
 .step p{margin:0;font-size:15px;color:var(--ink-muted);line-height:1.5}
 
 /* map contents */
-.band{background:var(--ink);color:#F3EEE5;border-radius:24px;padding:40px 24px;position:relative;overflow:hidden}
-.band .eyebrow{color:#F09A55}
+.band{background:radial-gradient(120% 140% at 100% 0%,#1B5C78 0%,#0E2A3B 60%);color:#F3EEE5;border-radius:24px;padding:40px 24px;position:relative;overflow:hidden}
+.band .eyebrow{color:#9ED3F0}
 .band h2{color:#fff}
-.band p{color:#C4CCD8}
+.band p{color:#C9DAE4}
 .band-grid{display:grid;gap:28px;align-items:center}
 @media(min-width:900px){.band{padding:64px}.band-grid{grid-template-columns:1fr 1fr;gap:56px}}
 .contents{display:grid;gap:0;margin:0;padding:0;list-style:none}
-.contents li{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid #2A3B57}
+.contents li{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid rgba(158,211,240,.18)}
 .contents li:last-child{border:0}
 .contents li b{display:block;color:#fff;font-weight:600}
-.contents li span{font-size:15px;color:#A9B3C2}
-.contents .n{font:500 15px/1.6 var(--serif);color:#F09A55}
-.band-media{border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/5;background:#16263F}
+.contents li span{font-size:15px;color:#B9CCD8}
+.contents .n{font:500 15px/1.6 var(--serif);color:#9ED3F0}
+.band-media{border-radius:var(--r-md);overflow:hidden;aspect-ratio:4/5;background:#134A5E}
 .band-media img{width:100%;height:100%;object-fit:cover}
 
 /* author */
 .author{display:grid;gap:24px;align-items:center}
 @media(min-width:820px){.author{grid-template-columns:200px 1fr;gap:48px}}
 .author .stat{font:400 44px/1 var(--serif);margin-top:18px}.author .stat small{display:block;font:600 13px/1.4 var(--sans);color:var(--ink-muted);letter-spacing:.04em;margin-top:6px}
-.author .mono{width:160px;height:160px;border-radius:50%;background:var(--surface-200);display:grid;place-items:center;font:400 54px/1 var(--serif);color:var(--ink);border:1px solid var(--line)}
-.author blockquote{margin:0;font:300 clamp(24px,3.4vw,32px)/1.3 var(--serif)}
+.author .mono{width:160px;height:160px;border-radius:50%;background:linear-gradient(160deg,var(--sky-soft),var(--mint-soft));display:grid;place-items:center;font:400 54px/1 var(--serif);color:var(--ink);border:1px solid var(--line)}
+.author blockquote{margin:0;font:300 clamp(24px,3.4vw,32px)/1.3 var(--serif);letter-spacing:-.02em}
 
 /* faq */
 details{border-bottom:1px solid var(--line);padding:18px 0}
 summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:16px}
 summary::-webkit-details-marker{display:none}
-summary:after{content:"+";font:400 24px/1 var(--serif);color:var(--aurora-text)}
+summary:after{content:"+";font:300 26px/1 var(--serif);color:var(--sky-text)}
 details[open] summary:after{content:"–"}
 details p{margin:10px 0 0;color:var(--ink-muted)}
 
@@ -144,7 +149,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 .panel-head{position:sticky;top:0;background:var(--surface-100);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);z-index:2}
 .progress{display:flex;gap:6px;flex:1;margin-right:16px}
 .progress i{height:4px;flex:1;border-radius:4px;background:var(--line)}
-.progress i.on{background:var(--ink)}
+.progress i.on{background:var(--grad)}
 .x{background:none;border:0;font-size:28px;line-height:1;cursor:pointer;color:var(--ink);width:44px;height:44px}
 .panel-body{padding:24px 20px 120px}
 @media(min-width:820px){.panel-body{padding:32px 40px 120px}}
@@ -154,7 +159,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 .choice{display:grid;gap:12px;margin-top:20px}
 .choice label{display:flex;gap:14px;align-items:flex-start;padding:18px;border:1.5px solid var(--line);border-radius:var(--r-md);background:var(--surface-card);cursor:pointer}
 .choice input{margin-top:5px;accent-color:var(--ink);width:18px;height:18px}
-.choice label:has(input:checked){border-color:var(--ink);box-shadow:var(--shadow)}
+.choice label:has(input:checked){border-color:var(--sky-text);box-shadow:var(--shadow);background:linear-gradient(160deg,#fff,var(--sky-soft))}
 .choice b{display:block;font:500 21px/1.2 var(--serif)}
 .choice small{display:block;color:var(--ink-muted);font-size:14px;margin-top:4px}
 .choice .p{margin-left:auto;font-weight:700;white-space:nowrap}
@@ -193,7 +198,7 @@ body.thanks #obrigado{display:block}
 <header class="top" id="top">
   <div class="wrap">
     <a class="brand" href="#inicio" aria-label="Mapeando Futuros — início">
-      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M4 46c10-6 18-2 26-6s14-14 30-12" stroke="#12233F" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/><path d="M4 56c12-5 22 0 32-5s14-10 24-9" stroke="#12233F" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/><path d="M4 34c8-4 13-1 19-5S31 14 44 12" stroke="#12233F" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/><path d="M8 58C16 50 18 42 28 38s6-5 7-8" stroke="#12233F" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 5"/><circle cx="42" cy="22" r="12" stroke="#12233F" stroke-width="2.4"/><circle cx="42" cy="22" r="6.5" stroke="#12233F" stroke-width="2.4"/><circle cx="42" cy="22" r="2.6" fill="#E8833A"/><circle cx="8" cy="58" r="2.2" fill="#12233F"/></svg>
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M4 46c10-6 18-2 26-6s14-14 30-12" stroke="#0E2A3B" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/><path d="M4 56c12-5 22 0 32-5s14-10 24-9" stroke="#0E2A3B" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/><path d="M4 34c8-4 13-1 19-5S31 14 44 12" stroke="#0E2A3B" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/><path d="M8 58C16 50 18 42 28 38s6-5 7-8" stroke="#0E2A3B" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 5"/><circle cx="42" cy="22" r="12" stroke="#0E2A3B" stroke-width="2.4"/><circle cx="42" cy="22" r="6.5" stroke="#0E2A3B" stroke-width="2.4"/><circle cx="42" cy="22" r="2.6" fill="#3FB5A3"/><circle cx="8" cy="58" r="2.2" fill="#0E2A3B"/></svg>
       <b>Mapeando Futuros</b>
     </a>
     <nav>
@@ -208,24 +213,24 @@ body.thanks #obrigado{display:block}
 <main>
 <section class="hero" id="inicio">
   <svg class="contours" viewBox="0 0 1200 260" preserveAspectRatio="none" fill="none" aria-hidden="true">
-    <path d="M0 200C200 150 330 220 520 180S860 60 1200 110" stroke="#DDD5C7" stroke-width="1.5"/>
-    <path d="M0 236C220 200 360 250 560 214S900 120 1200 150" stroke="#DDD5C7" stroke-width="1.5"/>
-    <path d="M0 160C180 110 300 170 480 140S820 20 1200 70" stroke="#DDD5C7" stroke-width="1.5"/>
+    <path d="M0 200C200 150 330 220 520 180S860 60 1200 110" stroke="#C9DDE8" stroke-width="1.5"/>
+    <path d="M0 236C220 200 360 250 560 214S900 120 1200 150" stroke="#C9DDE8" stroke-width="1.5"/>
+    <path d="M0 160C180 110 300 170 480 140S820 20 1200 70" stroke="#C9DDE8" stroke-width="1.5"/>
   </svg>
   <div class="wrap hero-grid">
     <div>
       <p class="eyebrow">Mapa de Potenciais e Caminhos</p>
-      <h1 style="margin-top:14px">Saiba onde você está.<br><em>Veja para onde pode ir.</em></h1>
-      <p class="lead">Uma análise integrada das suas habilidades, talentos, história e perfil — traduzida em caminhos reais, para escolher uma carreira ou para retomar a própria vida.</p>
+      <h1 style="margin-top:14px">Quem você<br>pode ser <em>daqui<br>a alguns anos?</em></h1>
+      <p class="lead">O Mapa de Potenciais e Caminhos lê o que você já tem — habilidades, talentos, história e perfil — e mostra, com clareza, quem você pode se tornar: na carreira e na vida.</p>
       <div class="ctas">
-        <a class="btn btn-primary" href="#caminhos">Escolher meu caminho →</a>
+        <a class="btn btn-primary" href="#caminhos">Descobrir meu futuro →</a>
         <a class="btn btn-ghost" href="#como-funciona">Como funciona</a>
       </div>
       <p class="signature">Metodologia desenvolvida por Celso Junqueira</p>
     </div>
     <div class="hero-media">
       <img src="assets/hero.jpg" alt="Trilha atravessando campos em direção ao horizonte ao amanhecer" onerror="this.remove()">
-      <div class="pin"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#12233F" stroke-width="2"/><circle cx="12" cy="12" r="4.5" stroke="#12233F" stroke-width="2"/><circle cx="12" cy="12" r="1.8" fill="#E8833A"/></svg>Você está aqui</div>
+      <div class="pin"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#0E2A3B" stroke-width="2"/><circle cx="12" cy="12" r="4.5" stroke="#0E2A3B" stroke-width="2"/><circle cx="12" cy="12" r="1.8" fill="#3FB5A3"/></svg>Daqui até lá</div>
     </div>
   </div>
 </section>
@@ -234,7 +239,7 @@ body.thanks #obrigado{display:block}
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">Dois caminhos, um mesmo método</p>
-      <h2 style="margin-top:12px">Por onde você quer começar?</h2>
+      <h2 style="margin-top:12px">Que futuro você quer enxergar?</h2>
       <p>As duas opções entregam o seu Mapa de Potenciais e Caminhos. O que muda é a pergunta que ele responde.</p>
     </div>
     <div class="focus-grid">
@@ -242,7 +247,7 @@ body.thanks #obrigado{display:block}
         <div class="ph"><img src="assets/vocacional.jpg" alt="Estudante de costas diante de uma janela, com um caderno aberto" onerror="this.remove()"></div>
         <div class="body">
           <p class="eyebrow">Vocacional</p>
-          <h3>Escolher uma formação ou direção profissional</h3>
+          <h3>Quem você pode ser na profissão</h3>
           <p class="quote">“O que eu faço bem, do que eu gosto — e onde isso cabe no mundo?”</p>
           <ul>
             <li>Para estudantes do fundamental e do médio, e quem vai escolher a primeira graduação</li>
@@ -257,7 +262,7 @@ body.thanks #obrigado{display:block}
         <div class="ph"><img src="assets/retomada.jpg" alt="Adulto caminhando por uma trilha ao nascer do sol" onerror="this.remove()"></div>
         <div class="body">
           <p class="eyebrow">Caminho da Retomada</p>
-          <h3>Retomar a iniciativa na própria vida</h3>
+          <h3>Quem você ainda pode ser</h3>
           <p class="quote">“Voltar a fazer planos. Voltar ao caminho dos bons resultados.”</p>
           <ul>
             <li>Para quem passou por perdas, frustrações ou mudanças e não sabe por onde recomeçar</li>
@@ -293,7 +298,7 @@ body.thanks #obrigado{display:block}
       <div class="band-grid">
         <div>
           <p class="eyebrow">O que vem no seu Mapa</p>
-          <h2 style="margin:12px 0 18px">Um documento para guardar, reler e usar.</h2>
+          <h2 style="margin:12px 0 18px">Um retrato de quem você é. Um mapa de quem você pode ser.</h2>
           <ol class="contents">
             <li><span class="n">I</span><div><b>Retrato de potenciais</b><span>Habilidades, talentos naturais e o que a sua história já provou.</span></div></li>
             <li><span class="n">II</span><div><b>Perfil de comportamento</b><span>Como você decide, aprende e se relaciona — e onde isso rende mais.</span></div></li>
@@ -331,9 +336,9 @@ body.thanks #obrigado{display:block}
 
 <section id="obrigado">
   <div class="wrap" style="max-width:640px;text-align:center">
-    <svg viewBox="0 0 64 64" width="72" height="72" fill="none" style="margin:0 auto 24px" aria-hidden="true"><circle cx="32" cy="32" r="22" stroke="#12233F" stroke-width="2.4"/><circle cx="32" cy="32" r="12" stroke="#12233F" stroke-width="2.4"/><circle cx="32" cy="32" r="4.5" fill="#E8833A"/></svg>
+    <svg viewBox="0 0 64 64" width="72" height="72" fill="none" style="margin:0 auto 24px" aria-hidden="true"><circle cx="32" cy="32" r="22" stroke="#0E2A3B" stroke-width="2.4"/><circle cx="32" cy="32" r="12" stroke="#0E2A3B" stroke-width="2.4"/><circle cx="32" cy="32" r="4.5" fill="#3FB5A3"/></svg>
     <p class="eyebrow">Pedido confirmado</p>
-    <h2 style="margin:12px 0 16px">Seu mapa começou a ser traçado.</h2>
+    <h2 style="margin:12px 0 16px">O seu futuro começou a ser desenhado.</h2>
     <p class="muted">Recebemos suas respostas e o pagamento. O seu Mapa de Potenciais e Caminhos chega no seu e-mail <span data-delivery>em até 3 dias úteis</span>. Se não encontrar, confira a caixa de spam.</p>
     <a class="btn btn-ghost" href="#inicio" style="margin-top:24px" id="backHome">Voltar ao início</a>
   </div>

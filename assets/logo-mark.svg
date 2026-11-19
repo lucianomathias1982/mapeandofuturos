@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <title>Mapeando Futuros</title>
   <!-- curvas de nível -->
-  <path d="M4 46c10-6 18-2 26-6s14-14 30-12" stroke="#12233F" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/>
-  <path d="M4 56c12-5 22 0 32-5s14-10 24-9" stroke="#12233F" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/>
-  <path d="M4 34c8-4 13-1 19-5S31 14 44 12" stroke="#12233F" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M4 46c10-6 18-2 26-6s14-14 30-12" stroke="#0E2A3B" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M4 56c12-5 22 0 32-5s14-10 24-9" stroke="#0E2A3B" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M4 34c8-4 13-1 19-5S31 14 44 12" stroke="#0E2A3B" stroke-opacity=".18" stroke-width="1.6" stroke-linecap="round"/>
   <!-- rota -->
-  <path d="M8 58C16 50 18 42 28 38s6-5 7-8" stroke="#12233F" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 5"/>
+  <path d="M8 58C16 50 18 42 28 38s6-5 7-8" stroke="#0E2A3B" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 5"/>
   <!-- alvo / localização -->
-  <circle cx="42" cy="22" r="12" stroke="#12233F" stroke-width="2.4"/>
-  <circle cx="42" cy="22" r="6.5" stroke="#12233F" stroke-width="2.4"/>
-  <circle cx="42" cy="22" r="2.6" fill="#E8833A"/>
-  <circle cx="8" cy="58" r="2.2" fill="#12233F"/>
+  <circle cx="42" cy="22" r="12" stroke="#0E2A3B" stroke-width="2.4"/>
+  <circle cx="42" cy="22" r="6.5" stroke="#0E2A3B" stroke-width="2.4"/>
+  <circle cx="42" cy="22" r="2.6" fill="#3FB5A3"/>
+  <circle cx="8" cy="58" r="2.2" fill="#0E2A3B"/>
 </svg>
