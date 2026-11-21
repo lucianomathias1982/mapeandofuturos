@@ -25,9 +25,11 @@ export default async (req) => {
 
     const atualizado = { ...pedido, status: "pago", pagoEm: new Date().toISOString(), stripeSession: s.id, valorPago: s.amount_total / 100 };
     await store.setJSON(orderId, atualizado);
-    await fetch(process.env.AUTOMATION_WEBHOOK_URL, {
-      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(atualizado)
-    });
+    if (process.env.AUTOMATION_WEBHOOK_URL) {
+      await fetch(process.env.AUTOMATION_WEBHOOK_URL, {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(atualizado)
+      }).catch(() => {});
+    }
   }
   return new Response("ok", { status: 200 });
 };

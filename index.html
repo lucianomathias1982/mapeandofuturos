@@ -462,7 +462,7 @@ body.thanks #obrigado{display:block}
 const CONFIG = {
   // Endpoint que cria a sessão de checkout na Stripe (Netlify Function incluída no pacote).
   // Deixe vazio para modo de demonstração.
-  checkoutEndpoint: "",            // ex.: "/.netlify/functions/create-checkout"
+  checkoutEndpoint: "/.netlify/functions/create-checkout",
   prices: { vocacional: 240, retomada: 240 },   // em reais — os valores cobrados vivem na Stripe
   delivery: "em até 3 dias úteis",
   contact: "contato@mapeandofuturos.com"
@@ -470,7 +470,7 @@ const CONFIG = {
 /* ======================================================== */
 // Sem checkout configurado: no domínio real, o pedido vira pré-pedido (Netlify Forms) e a equipe conclui o pagamento por e-mail.
 const IS_PREVIEW = !/mapeandofuturos\.(com|netlify\.app)$/.test(location.hostname);
-const MODE = CONFIG.checkoutEndpoint ? "checkout" : (IS_PREVIEW ? "demo" : "prepedido");
+let MODE = IS_PREVIEW ? "demo" : (CONFIG.checkoutEndpoint ? "checkout" : "prepedido");
 
 const $ = (s, el=document) => el.querySelector(s), $$ = (s, el=document) => [...el.querySelectorAll(s)];
 const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
@@ -561,10 +561,18 @@ $("#nextBtn").addEventListener("click", async () => {
       if (!res.ok) throw new Error("form");
       return finish();
     }
-    const res = await fetch(CONFIG.checkoutEndpoint, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(data())});
-    const j = await res.json();
-    if (!res.ok || !j.url) throw new Error(j.error || "Falha ao abrir o checkout");
-    location.href = j.url;
+    let j = {}, ok = false;
+    try {
+      const res = await fetch(CONFIG.checkoutEndpoint, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(data())});
+      j = await res.json().catch(()=>({})); ok = res.ok && j.url;
+    } catch(_) {}
+    if (ok) { location.href = j.url; return; }
+    // Checkout indisponível: guarda como pré-pedido para não perder o cliente
+    MODE = "prepedido";
+    const body = new URLSearchParams({"form-name":"pre-pedido", ...Object.fromEntries(Object.entries(data()).map(([k,v])=>[k,String(v)]))});
+    const res2 = await fetch("/", {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body});
+    if (!res2.ok) throw new Error("form");
+    return finish();
   } catch(e){ err(3, "Não foi possível abrir o pagamento agora. Tente novamente em instantes."); btn.disabled = false; show(3); }
 });
 function finish(){
