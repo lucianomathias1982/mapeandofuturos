@@ -1,35 +1,35 @@
-// Recebe a confirmação de pagamento da Stripe e dispara a produção do Mapa.
-// Variáveis: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, AUTOMATION_WEBHOOK_URL
-// AUTOMATION_WEBHOOK_URL = cenário do Make/n8n que gera o rascunho do PDF, envia para revisão de Celso
-// e, após aprovação, entrega o PDF por e-mail ao cliente.
+// Confirmação do pagamento pela Stripe. Idempotente: eventos repetidos não duplicam o pedido.
+// Variáveis: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET
+// Eventos: checkout.session.completed, checkout.session.async_payment_succeeded,
+//          checkout.session.async_payment_failed, checkout.session.expired
 import Stripe from "stripe";
-import { getStore } from "@netlify/blobs";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+import { lerPedido, salvarPedido } from "../../lib/pedidos.mjs";
+import { dispararProcessamento } from "../../lib/processar.mjs";
 
 export default async (req) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_x");
   const sig = req.headers.get("stripe-signature");
   const raw = await req.text();
   let event;
   try { event = stripe.webhooks.constructEvent(raw, sig, process.env.STRIPE_WEBHOOK_SECRET); }
   catch (e) { return new Response(`Webhook inválido: ${e.message}`, { status: 400 }); }
 
-  if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
-    const s = event.data.object;
-    if (s.payment_status !== "paid") return new Response("aguardando", { status: 200 });
-    const store = getStore("pedidos");
-    const orderId = s.client_reference_id;
-    const pedido = await store.get(orderId, { type: "json" });
-    if (!pedido) return new Response("pedido não encontrado", { status: 200 });
-    if (pedido.status === "pago") return new Response("já processado", { status: 200 }); // idempotência
+  const s = event.data.object;
+  const orderId = s.client_reference_id || s.metadata?.orderId;
+  const pedido = orderId ? await lerPedido(orderId) : null;
+  if (!pedido) return new Response("pedido não encontrado", { status: 200 });
 
-    const atualizado = { ...pedido, status: "pago", pagoEm: new Date().toISOString(), stripeSession: s.id, valorPago: s.amount_total / 100 };
-    await store.setJSON(orderId, atualizado);
-    if (process.env.AUTOMATION_WEBHOOK_URL) {
-      await fetch(process.env.AUTOMATION_WEBHOOK_URL, {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(atualizado)
-      }).catch(() => {});
+  if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
+    if (s.payment_status !== "paid") return new Response("aguardando compensação", { status: 200 });
+    if (pedido.status === "aguardando_pagamento" || pedido.status === "pagamento_falhou" || pedido.status === "expirado") {
+      await salvarPedido(pedido, "pago", { pagoEm: new Date().toISOString(), stripeSession: s.id, valorPago: (s.amount_total || 0) / 100, eventoPagamento: event.id });
     }
+    // Repetição do evento: apenas garante que o processamento siga (a função é idempotente).
+    await dispararProcessamento(orderId);
+  } else if (event.type === "checkout.session.async_payment_failed" && pedido.status === "aguardando_pagamento") {
+    await salvarPedido(pedido, "pagamento_falhou", { motivo: "pagamento assíncrono recusado" });
+  } else if (event.type === "checkout.session.expired" && pedido.status === "aguardando_pagamento") {
+    await salvarPedido(pedido, "expirado", { checkoutUrl: null });
   }
   return new Response("ok", { status: 200 });
 };
