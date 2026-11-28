@@ -54,8 +54,8 @@ header.top.scrolled{border-color:var(--line)}
 .top nav{display:flex;gap:22px;align-items:center}
 .top nav a.l{text-decoration:none;font-weight:600;font-size:15px;color:var(--ink-muted)}
 .top nav a.l:hover{color:var(--ink)}
-.top .btn{min-height:42px;padding:0 18px;font-size:14px;white-space:nowrap}
-@media(max-width:420px){.top .btn .lg{display:none}.brand b{font-size:17px}}
+.top .btn{min-height:48px;padding:0 22px;font-size:15px;white-space:nowrap}
+@media(max-width:420px){.top .btn .lg{display:none}.top .btn{padding:0 16px}.brand b{font-size:17px}}
 @media(max-width:720px){.top nav a.l{display:none}}
 
 /* hero */
@@ -156,6 +156,14 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 @media(min-width:820px){.panel-body{padding:32px 40px 120px}}
 .panel-foot{position:sticky;bottom:0;background:var(--surface-100);padding:14px 20px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:flex;gap:10px}
 .panel-foot .btn{flex:1}
+.scroll-hint{position:absolute;left:50%;top:-44px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;font-weight:700;padding:8px 14px;border-radius:999px;display:flex;gap:6px;align-items:center;pointer-events:none;opacity:0;transition:opacity .2s;white-space:nowrap}
+.scroll-hint.on{opacity:.92}
+.scroll-hint i{font-style:normal;display:inline-block;animation:mf-bob 1.2s ease-in-out infinite}
+@keyframes mf-bob{50%{transform:translateY(3px)}}
+.choice .p small{display:block;font-weight:400;font-size:12px;color:var(--ink-muted);margin-top:2px;text-align:right}
+.ask{margin-top:36px;padding:28px;border:1.5px solid var(--blue-line);border-radius:var(--r-md);text-align:center}
+.ask h3{font:500 24px/1.2 var(--serif)}
+.ask .btn{margin-top:16px}
 .step-view{display:none}.step-view.on{display:block}
 .choice{display:grid;gap:12px;margin-top:20px}
 .choice label{display:flex;gap:14px;align-items:flex-start;padding:18px;border:1.5px solid var(--blue-line);border-radius:var(--r-md);background:var(--surface-card);cursor:pointer}
@@ -292,7 +300,7 @@ header.top{background:rgba(255,252,247,.86)}
       <a class="l" href="#caminhos">Caminhos</a>
       <a class="l" href="#como-funciona">Como funciona</a>
       <a class="l" href="#duvidas">Dúvidas</a>
-      <button class="btn btn-dark" data-open>Mapear<span class="lg">&nbsp;meu futuro</span></button>
+      <button class="btn btn-dark" data-open>Solicitar<span class="lg">&nbsp;meu</span>&nbsp;Mapa</button>
     </nav>
   </div>
 </header>
@@ -302,16 +310,16 @@ header.top{background:rgba(255,252,247,.86)}
   <div class="wrap hero-grid">
     <div class="reveal">
       <p class="eyebrow">Mapa de Potenciais e Caminhos</p>
-      <h1 style="margin-top:14px">Quem você pode ser <span class="hl">daqui a alguns anos?</span></h1>
-      <p class="lead">O Mapa de Potenciais e Caminhos é uma análise integrada do que você faz com naturalidade, do que pode desenvolver e de onde vale prestar atenção. Serve para escolher uma carreira com mais critério e para retomar planos com os pés no chão.</p>
+      <h1 style="margin-top:14px">O que você pode construir <span class="hl">de hoje em diante?</span></h1>
+      <p class="lead">O <b>Mapa de Potenciais e Caminhos</b> ajuda você a reconhecer habilidades e talentos, olhar para o que sua história já mostrou e escolher um próximo passo na carreira ou na vida.</p>
       <div class="ctas">
         <button class="btn btn-primary" data-open>Mapear meu futuro →</button>
-        <a class="btn btn-ghost" href="#como-funciona">Como funciona</a>
+        <a class="btn btn-ghost" href="exemplo/mapa-de-potenciais-exemplo.pdf" target="_blank" rel="noopener">Ver exemplo de Mapa</a>
       </div>
       <div class="trust">
         <div><b>Desde 1988</b>escutando histórias</div>
         <div><b>200 mil+</b>análises pessoais</div>
-        <div><b>R$ 240</b>pagamento único</div>
+        <div><b data-price="vocacional">R$ 230,00</b>pagamento único</div>
       </div>
     </div>
     <div class="hero-media reveal">
@@ -334,13 +342,13 @@ header.top{background:rgba(255,252,247,.86)}
         <div class="ph"><img src="assets/vocacional.jpg" alt="Mãe e filho adolescente rindo juntos à mesa, com post-its e um caderno de ideias" onerror="this.remove()"><span class="tag">Vocacional</span></div>
         <div class="body">
           <h3>Quem você pode ser na profissão</h3>
-          <p class="quote">“O que eu faço bem, do que eu gosto — e onde isso cabe no mundo?”</p>
+          <p class="quote">“Que formação ou carreira faz sentido para mim?”</p>
           <ul>
             <li>Para estudantes do fundamental e do médio, e quem vai escolher a primeira graduação</li>
             <li>Conecta aptidões e interesses a cursos e profissões possíveis</li>
             <li>Transforma a ansiedade da escolha em critério claro</li>
           </ul>
-          <div class="price"><b data-price="vocacional">R$ 240</b><span>pagamento único</span></div>
+          <div class="price"><b data-price="vocacional">R$ 230,00</b><span>pagamento único</span></div>
           <button class="btn btn-primary" data-open="vocacional">Quero meu Mapa</button>
         </div>
       </article>
@@ -348,13 +356,13 @@ header.top{background:rgba(255,252,247,.86)}
         <div class="ph"><img src="assets/retomada.jpg" alt="Mulher sorrindo enquanto organiza post-its coloridos na parede, planejando os próximos passos" onerror="this.remove()"><span class="tag">Caminho da Retomada</span></div>
         <div class="body">
           <h3>Quem você ainda pode ser</h3>
-          <p class="quote">“Voltar a fazer planos. Voltar ao caminho dos bons resultados.”</p>
+          <p class="quote">“Por onde começo para retomar um projeto ou mudar de direção?”</p>
           <ul>
             <li>Para quem passou por perdas, frustrações ou mudanças e quer recomeçar</li>
             <li>Mostra as qualidades e os potenciais que continuam aí</li>
             <li>Termina com um roteiro prático de primeiros passos</li>
           </ul>
-          <div class="price"><b data-price="retomada">R$ 240</b><span>pagamento único</span></div>
+          <div class="price"><b data-price="retomada">R$ 230,00</b><span>pagamento único</span></div>
           <button class="btn btn-primary" data-open="retomada">Quero recomeçar</button>
         </div>
       </article>
@@ -396,13 +404,13 @@ header.top{background:rgba(255,252,247,.86)}
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">Como funciona</p>
-      <h2 style="margin-top:12px">Quatro passos simples até o seu Mapa</h2>
+      <h2 style="margin-top:12px">Seu Mapa de Potenciais e Caminhos em quatro passos</h2>
     </div>
     <div class="trail">
-      <div class="stop reveal"><div class="dot">1</div><h3>Escolha o foco</h3><p>Vocacional ou Caminho da Retomada.</p></div>
-      <div class="stop reveal"><div class="dot">2</div><h3>Informe nome e data</h3><p>Nome completo de registro e data de nascimento. Se quiser, conte algo sobre o seu momento.</p></div>
-      <div class="stop reveal"><div class="dot">3</div><h3>Confira e pague</h3><p>Você revisa os dados e paga com segurança, pela Stripe.</p></div>
-      <div class="stop reveal"><div class="dot">4</div><h3>Receba seu Mapa</h3><p>O PDF chega no seu e-mail <span data-delivery>em até 3 dias úteis</span>, revisado pessoalmente.</p></div>
+      <div class="stop reveal"><div class="dot">1</div><h3>Escolha o foco</h3><p>Orientação Vocacional ou Caminho da Retomada.</p></div>
+      <div class="stop reveal"><div class="dot">2</div><h3>Conte um pouco sobre você</h3><p>Preencha seus dados e conte o que gostaria de esclarecer neste momento.</p></div>
+      <div class="stop reveal"><div class="dot">3</div><h3>Faça o pagamento</h3><p>Confira seu pedido e siga para o pagamento de <b data-price="vocacional">R$ 230,00</b>.</p></div>
+      <div class="stop reveal"><div class="dot">4</div><h3>Receba seu Mapa</h3><p>Após a confirmação do pagamento, seu Mapa será gerado automaticamente e enviado em PDF para o e-mail informado.</p></div>
     </div>
   </div>
 </section>
@@ -415,12 +423,12 @@ header.top{background:rgba(255,252,247,.86)}
           <p class="eyebrow">O que vem no seu Mapa</p>
           <h2 style="margin:12px 0 18px">Um retrato de quem você é. Um mapa de quem você pode ser.</h2>
           <ol class="contents">
-            <li><span class="n">1</span><div><b>Seus potenciais naturais</b><span>O que você faz com naturalidade e onde reconhecer isso no dia a dia.</span></div></li>
-            <li><span class="n">2</span><div><b>Satisfação e convivência</b><span>O que lhe dá satisfação e a impressão que você pode transmitir.</span></div></li>
-            <li><span class="n">3</span><div><b>Capacidades e aspectos a fortalecer</b><span>O que vale desenvolver, onde podem surgir dificuldades e como lidar com elas.</span></div></li>
-            <li><span class="n">4</span><div><b>Na vida pessoal e profissional</b><span>Aplicações concretas e dois caminhos para experimentar e comparar.</span></div></li>
-            <li><span class="n">5</span><div><b>Como você se expressa e o que fazer agora</b><span>Os Planos de Expressão em gráfico e um quadro para acompanhar o que você experimentar.</span></div></li>
+            <li><span class="n">I</span><div><b>Retrato de potenciais</b><span>Habilidades, talentos e o que sua história já mostrou.</span></div></li>
+            <li><span class="n">II</span><div><b>Seu jeito de agir</b><span>Como você analisa situações, toma decisões e se relaciona no dia a dia.</span></div></li>
+            <li><span class="n">III</span><div><b>Caminhos possíveis</b><span>Possibilidades para explorar na carreira ou na retomada de projetos pessoais e profissionais.</span></div></li>
+            <li><span class="n">IV</span><div><b>Próximos passos</b><span>Ações práticas para experimentar a partir de agora.</span></div></li>
           </ol>
+          <a class="btn btn-ghost" href="exemplo/mapa-de-potenciais-exemplo.pdf" target="_blank" rel="noopener" style="margin-top:22px">Ver exemplo de Mapa</a>
         </div>
         <div class="band-media"><img src="assets/mapa.jpg" alt="Mãos segurando o Mapa impresso, com um caminho pontilhado na capa" onerror="this.remove()"></div>
       </div>
@@ -432,9 +440,12 @@ header.top{background:rgba(255,252,247,.86)}
   <div class="wrap author reveal">
     <div><div class="mono" aria-hidden="true">CJ</div><div class="stat">200 mil+<small>análises pessoais desde 1988</small></div></div>
     <div>
-      <p class="eyebrow">Quem desenvolveu · Celso Junqueira</p>
+      <p class="eyebrow">Quem desenvolveu</p>
       <blockquote style="margin-top:12px">“Limitar sua curiosidade pode limitar seu conhecimento e suas possibilidades.”</blockquote>
-      <p class="muted" style="margin-top:16px">O Mapa de Potenciais e Caminhos é uma metodologia desenvolvida por <b style="color:var(--ink)">Celso Junqueira</b>. <span data-bio>Paulista, formado em Direito, Celso dedica-se desde 1988 às análises pessoais para o autoconhecimento — são mais de 200.000 realizadas ao longo de mais de três décadas. Hipnólogo e estudioso da Numerologia, criou o Mapa para levar essa escuta a duas decisões concretas: a escolha de uma carreira e a retomada da própria vida.</span></p>
+      <p class="muted" style="margin-top:16px">O <b style="color:var(--ink)">Mapa de Potenciais e Caminhos</b> é uma metodologia criada por <b style="color:var(--ink)">Celso Junqueira</b> para ajudar pessoas a reconhecer seus potenciais e decidir como colocá-los em prática.</p>
+      <p class="muted" style="margin-top:12px" data-bio>Paulista, bacharel em Direito, hipnólogo e usuário do Quantec (Biocomunicação Instrumental), Celso dedica-se desde 1988 às análises pessoais para o autoconhecimento. Ao longo de quase quatro décadas, realizou mais de 200 mil análises. Dessa experiência de escuta surgiram os dois focos do Mapa.</p>
+      <p class="muted" style="margin-top:12px"><b style="color:var(--ink)">Orientação Vocacional</b> ajuda a identificar e explorar caminhos de formação e carreira.</p>
+      <p class="muted" style="margin-top:8px"><b style="color:var(--ink)">Caminho da Retomada</b> ajuda a reconhecer o que precisa mudar e a escolher um primeiro passo para voltar a avançar.</p>
     </div>
   </div>
 </section>
@@ -445,12 +456,16 @@ header.top{background:rgba(255,252,247,.86)}
     <details><summary>O que recebo?</summary><p>Você recebe uma Análise Integrada em PDF com potenciais naturais, capacidades a desenvolver, aspectos a fortalecer, sugestões práticas, os Planos de Expressão e um quadro de acompanhamento.</p></details>
     <details><summary>Vou precisar de uma sessão?</summary><p>Não. O Mapa foi preparado para leitura e aplicação autônomas. Você pode escolher uma situação da sua vida e usar o quadro para acompanhar o que experimentar.</p></details>
     <details><summary>O que preciso informar?</summary><p>Informe seu nome completo de registro e sua data de nascimento. Se quiser, conte algo sobre seu momento para ajudar a direcionar os exemplos.</p></details>
-    <details><summary>Quanto custa?</summary><p>O Mapa custa <span data-price="vocacional">R$ 240</span>, em pagamento único, para Vocacional ou Caminho da Retomada.</p></details>
-    <details><summary>O Mapa é um teste psicológico?</summary><p>Não. É uma análise de orientação e desenvolvimento a partir das informações que você compartilha. Não substitui acompanhamento psicológico, psiquiátrico ou médico.</p></details>
-    <details><summary>Meu filho é menor de idade. Como funciona?</summary><p>O pedido é feito pelo responsável legal, que preenche o formulário junto com o estudante e autoriza o uso das informações para a elaboração do Mapa.</p></details>
-    <details><summary>Em quanto tempo recebo?</summary><p>O PDF chega no e-mail informado <span data-delivery>em até 3 dias úteis</span> após a confirmação do pagamento.</p></details>
+    <details><summary>Quanto custa?</summary><p>O Mapa custa <span data-price="vocacional">R$ 230,00</span>, em pagamento único, para Orientação Vocacional ou Caminho da Retomada.</p></details>
+    <details><summary>O Mapa é um teste psicológico?</summary><p>O Mapa é um relatório de autoconhecimento e orientação. A metodologia foi desenvolvida por Celso Junqueira a partir de sua experiência com análises pessoais e ajuda você a reconhecer seus potenciais e pensar em como colocá-los em prática.</p><p>Se quiser contar um pouco da sua história, o Mapa pode também trazer orientações mais próximas do momento que você está vivendo.</p><p>O Mapa não é um teste psicológico e não substitui acompanhamento psicológico, psiquiátrico ou médico.</p></details>
+    <details><summary>Meu filho é menor de idade. Como funciona?</summary><p>O pedido é feito pelo responsável legal. Ele pode preencher o formulário com o participante e informar o e-mail em que deseja receber o Mapa.</p></details>
+    <details><summary>Em quanto tempo recebo?</summary><p>Assim que o pagamento for confirmado, seu Mapa será gerado e enviado automaticamente em PDF para o e-mail informado no pedido.</p></details>
     <details><summary>Meus dados ficam seguros?</summary><p>Usamos suas respostas apenas para elaborar o seu Mapa. Não vendemos nem compartilhamos dados, e você pode pedir a exclusão a qualquer momento.</p></details>
     <details><summary>E se eu me arrepender?</summary><p>Você pode cancelar em até 7 dias após a compra, com reembolso integral, conforme o Código de Defesa do Consumidor.</p></details>
+    <div class="ask">
+      <h3>Ficou com alguma dúvida?</h3>
+      <a class="btn btn-dark" id="askBtn" href="mailto:contato@mapeandofuturos.com?subject=D%C3%BAvida%20sobre%20o%20Mapa">Enviar uma pergunta</a>
+    </div>
   </div>
 </section>
 
@@ -458,7 +473,7 @@ header.top{background:rgba(255,252,247,.86)}
   <div class="wrap">
     <div class="cta-final reveal">
       <h2>O seu próximo capítulo pode começar hoje.</h2>
-      <p>Em poucos minutos você informa seus dados. Em poucos dias, recebe um mapa para seguir.</p>
+      <p>Em poucos minutos você informa seus dados. Assim que o pagamento é confirmado, o seu Mapa chega por e-mail.</p>
       <div class="row"><button class="btn btn-primary" data-open>Mapear meu futuro</button><a class="btn btn-ghost" href="#duvidas">Tirar dúvidas</a></div>
     </div>
   </div>
@@ -467,9 +482,9 @@ header.top{background:rgba(255,252,247,.86)}
 <section id="obrigado">
   <div class="wrap" style="max-width:640px;text-align:center">
     <svg viewBox="0 0 64 64" width="72" height="72" fill="none" style="margin:0 auto 24px" aria-hidden="true"><circle cx="32" cy="32" r="22" stroke="#0E2A3B" stroke-width="2.4"/><circle cx="32" cy="32" r="12" stroke="#0E2A3B" stroke-width="2.4"/><circle cx="32" cy="32" r="4.5" fill="#3FB5A3"/></svg>
-    <p class="eyebrow">Pedido confirmado</p>
-    <h2 style="margin:12px 0 16px">O seu futuro começou a ser desenhado.</h2>
-    <p class="muted">Recebemos suas respostas e o pagamento. O seu Mapa de Potenciais e Caminhos chega no seu e-mail <span data-delivery>em até 3 dias úteis</span>. Se não encontrar, confira a caixa de spam.</p>
+    <p class="eyebrow">Pagamento confirmado</p>
+    <h2 style="margin:12px 0 16px">Estamos preparando seu Mapa.</h2>
+    <p class="muted">Pagamento confirmado. Estamos preparando seu Mapa. O PDF será enviado para <b id="obgEmail" style="color:var(--ink)">o e-mail informado</b>. Se não encontrar em alguns minutos, confira a caixa de spam.</p>
     <a class="btn btn-ghost" href="#inicio" style="margin-top:24px" id="backHome">Voltar ao início</a>
   </div>
 </section>
@@ -500,8 +515,8 @@ header.top{background:rgba(255,252,247,.86)}
         <p class="eyebrow">Passo 1 de 3</p>
         <h2 id="sheetTitle" style="margin-top:8px;font-size:32px">Qual é o foco do seu Mapa?</h2>
         <div class="choice">
-          <label><input type="radio" name="foco" value="vocacional"><span><b>Vocacional</b><small>Escolher uma formação ou direção profissional</small></span><span class="p" data-price="vocacional">R$ 240</span></label>
-          <label><input type="radio" name="foco" value="retomada"><span><b>Caminho da Retomada</b><small>Voltar a fazer planos e retomar a iniciativa</small></span><span class="p" data-price="retomada">R$ 240</span></label>
+          <label><input type="radio" name="foco" value="vocacional"><span><b>Orientação Vocacional</b><small>“Que formação ou carreira faz sentido para mim?”</small></span><span class="p"><span data-price="vocacional">R$ 230,00</span><small>pagamento único</small></span></label>
+          <label><input type="radio" name="foco" value="retomada"><span><b>Caminho da Retomada</b><small>“Por onde começo para retomar um projeto ou mudar de direção?”</small></span><span class="p"><span data-price="retomada">R$ 230,00</span><small>pagamento único</small></span></label>
         </div>
         <p class="err" data-err="1"></p>
       </div>
@@ -510,12 +525,12 @@ header.top{background:rgba(255,252,247,.86)}
       <div class="step-view" data-step="2">
         <p class="eyebrow">Passo 2 de 3</p>
         <span class="cheer">✨ Ótima escolha</span>
-        <h2 style="margin-top:8px;font-size:32px">Quem vai receber o Mapa</h2>
-        <p class="muted" style="margin:8px 0 0">O Mapa é preparado a partir do nome completo de registro e da data de nascimento. Por isso, vale conferir com calma.</p>
+        <h2 style="margin-top:8px;font-size:32px">Conte um pouco sobre você</h2>
+        <p class="muted" style="margin:8px 0 0">Responda com calma, do seu jeito. Exemplos do seu dia a dia ajudam a tornar o Mapa mais útil e objetivo para o momento que você está vivendo.</p>
 
-        <fieldset>
-          <legend>Dados do participante</legend>
-          <div class="f"><label for="nome">Nome completo de registro ao nascer</label><input id="nome" name="nome" type="text" autocomplete="name" autocapitalize="words" maxlength="160" required>
+        <fieldset style="margin-top:22px">
+          <legend>Quem vai receber o Mapa</legend>
+          <div class="f"><label for="nome">Nome completo conforme o registro de nascimento</label><input id="nome" name="nome" type="text" autocomplete="name" autocapitalize="words" maxlength="160" required>
             <span class="hint">Como consta na certidão de nascimento, com todos os sobrenomes e partículas (da, de, dos…), mesmo que hoje você use outro nome.</span></div>
           <div class="f"><label for="dataNascimento">Data de nascimento</label><input id="dataNascimento" name="dataNascimento" type="text" inputmode="numeric" autocomplete="bday" placeholder="DD/MM/AAAA" maxlength="10" required></div>
         </fieldset>
@@ -530,17 +545,17 @@ header.top{background:rgba(255,252,247,.86)}
         <fieldset>
           <legend>Contato para envio</legend>
           <div class="row2">
-            <div class="f"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required><span class="hint">O PDF será enviado para este endereço.</span></div>
+            <div class="f"><label for="email">E-mail que receberá o PDF</label><input id="email" name="email" type="email" autocomplete="email" required><span class="hint">O Mapa em PDF será enviado para este endereço.</span></div>
             <div class="f"><label for="email2">Confirme o e-mail</label><input id="email2" name="email2" type="email" autocomplete="off" required></div>
           </div>
-          <div class="f"><label for="whatsapp">WhatsApp <span class="muted" style="font-weight:400">(opcional)</span></label><input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="(11) 90000-0000"></div>
+          <div class="f"><label for="whatsapp">WhatsApp <span class="muted" style="font-weight:400">(opcional, para suporte)</span></label><input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="(11) 90000-0000"></div>
         </fieldset>
 
         <fieldset>
           <legend>Se quiser compartilhar…</legend>
-          <div class="f"><label for="relato">Conte algo sobre o seu momento <span class="muted" style="font-weight:400">(opcional)</span></label>
+          <div class="f"><label for="relato">Quer contar um pouco sobre o momento que está vivendo? <span class="muted" style="font-weight:400">(opcional)</span></label>
             <textarea id="relato" name="relato" maxlength="2000"></textarea>
-            <span class="hint">Ajuda a escolher exemplos e ações mais próximos da sua realidade. Se preferir deixar em branco, o Mapa traz exemplos gerais para você avaliar.</span></div>
+            <span class="hint">Se preferir, deixe em branco e siga para o pagamento. O Mapa traz exemplos gerais para você avaliar.</span></div>
         </fieldset>
         <p class="err" data-err="2"></p>
       </div>
@@ -553,7 +568,7 @@ header.top{background:rgba(255,252,247,.86)}
         <p class="muted" style="margin:8px 0 0">O Mapa é gerado exatamente a partir do nome e da data abaixo. Se algo estiver diferente, use “Voltar” e corrija.</p>
         <div class="summary">
           <dl id="summaryList"></dl>
-          <div class="total"><span>Total</span><b id="summaryTotal">—</b></div>
+          <div class="total"><span>Total · pagamento único</span><b id="summaryTotal">—</b></div>
         </div>
         <label class="check"><input type="checkbox" id="c_dados" required><span>Conferi: o nome está completo, como no registro de nascimento, e a data de nascimento está correta.</span></label>
         <label class="check"><input type="checkbox" id="c_lgpd" required><span>Autorizo o uso das informações acima exclusivamente para a elaboração do meu Mapa de Potenciais e Caminhos, com apoio de ferramentas digitais e revisão humana, conforme a Lei Geral de Proteção de Dados.</span></label>
@@ -564,7 +579,7 @@ header.top{background:rgba(255,252,247,.86)}
         <p class="err" data-err="3"></p>
       </div>
     </form>
-    <div class="panel-foot">
+    <div class="panel-foot"><div class="scroll-hint" id="scrollHint" aria-hidden="true">Role para continuar <i>↓</i></div>
       <button class="btn btn-ghost" type="button" id="backBtn">Voltar</button>
       <button class="btn btn-primary" type="button" id="nextBtn">Continuar</button>
     </div>
@@ -577,8 +592,8 @@ const CONFIG = {
   // Endpoint que cria a sessão de checkout na Stripe (Netlify Function incluída no pacote).
   // Deixe vazio para modo de demonstração.
   checkoutEndpoint: "/.netlify/functions/create-checkout",
-  prices: { vocacional: 240, retomada: 240 },   // em reais — os valores cobrados vivem na Stripe
-  delivery: "em até 3 dias úteis",
+  prices: { vocacional: 230, retomada: 230 },   // em reais — tem de ser igual ao preço cadastrado na Stripe
+  delivery: "assim que o pagamento for confirmado",
   contact: "contato@mapeandofuturos.com"
 };
 /* ======================================================== */
@@ -587,7 +602,7 @@ const IS_PREVIEW = !/mapeandofuturos\.(com|netlify\.app)$/.test(location.hostnam
 let MODE = IS_PREVIEW ? "demo" : (CONFIG.checkoutEndpoint ? "checkout" : "prepedido");
 
 const $ = (s, el=document) => el.querySelector(s), $$ = (s, el=document) => [...el.querySelectorAll(s)];
-const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
+const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:2});
 $$("[data-price]").forEach(el => el.textContent = brl(CONFIG.prices[el.dataset.price]));
 $$("[data-delivery]").forEach(el => el.textContent = CONFIG.delivery);
 $$("[data-contact]").forEach(el => el.textContent = CONFIG.contact);
@@ -641,13 +656,17 @@ function show(n){
   $$(".step-view").forEach(v => v.classList.toggle("on", +v.dataset.step === n));
   $$(".progress i").forEach((b,i) => b.classList.toggle("on", i < n));
   $("#backBtn").textContent = n === 1 ? "Cancelar" : "Voltar";
-  $("#nextBtn").textContent = n === 3 ? ({checkout:"Confirmar e ir para o pagamento",demo:"Enviar pedido de teste",prepedido:"Enviar meu pedido"})[MODE] : "Continuar";
+  $("#nextBtn").textContent = n === 3 ? ({checkout:"Ir para o pagamento",demo:"Enviar pedido de teste",prepedido:"Enviar meu pedido"})[MODE] : "Continuar";
   $("#demoNote").hidden = MODE === "checkout";
   $("#demoNote").textContent = MODE === "demo" ? "Modo de demonstração: o checkout ainda não está conectado. O pedido de teste não é cobrado." : "O pagamento online abre em breve. Ao enviar, você recebe em até 1 dia útil, no seu e-mail, o link seguro para concluir o pagamento — nada é cobrado agora.";
   $(".secure").hidden = MODE !== "checkout";
   panel.scrollTop = 0;
   if (n === 3) buildSummary();
+  setTimeout(dica, 60);
 }
+// Mostra "Role para continuar" enquanto houver campos abaixo da área visível
+function dica(){ const v = $(".step-view.on"), pe = $(".panel-foot"); if (!v || !pe) return; $("#scrollHint").classList.toggle("on", v.getBoundingClientRect().bottom - pe.getBoundingClientRect().top > 24); }
+panel.addEventListener("scroll", dica, {passive:true}); addEventListener("resize", dica);
 function open(foco){
   sheet.classList.add("open"); document.body.style.overflow = "hidden";
   if (foco) { setFoco(foco); show(2); } else show(1);
@@ -657,7 +676,7 @@ function close(){ sheet.classList.remove("open"); document.body.style.overflow =
 $$("[data-open]").forEach(b => b.addEventListener("click", () => open(b.dataset.open)));
 $$("[data-close]").forEach(b => b.addEventListener("click", close));
 addEventListener("keydown", e => { if (e.key === "Escape" && sheet.classList.contains("open")) close(); });
-form.addEventListener("change", syncMode);
+form.addEventListener("change", () => { syncMode(); setTimeout(dica, 30); });
 form.addEventListener("submit", e => e.preventDefault());
 
 function err(n, msg){ $(`[data-err="${n}"]`).textContent = msg || ""; }
@@ -717,7 +736,7 @@ $("#nextBtn").addEventListener("click", async () => {
     if (MODE === "prepedido"){ await prePedido(); return finish(); }
     let res, j = {};
     try { res = await fetch(CONFIG.checkoutEndpoint, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(data())}); j = await res.json().catch(()=>({})); } catch(_) {}
-    if (res && res.ok && j.url) { location.href = j.url; return; }
+    if (res && res.ok && j.url) { try { sessionStorage.setItem("mf_email", data().email); } catch(_){} location.href = j.url; return; }
     if (res && (res.status === 400 || res.status === 409)) {
       btn.disabled = false;
       if (j.campo) { show(2); const el = $("#" + j.campo); if (el) { el.classList.add("invalid"); el.focus(); } err(2, j.error); }
@@ -736,7 +755,7 @@ function finish(){
   }
   close(); form.reset(); try { sessionStorage.removeItem("mf_chave"); } catch(_){} location.hash = "obrigado"; route();
 }
-function route(){ const t = location.hash === "#obrigado"; document.body.classList.toggle("thanks", t); if (t) { scrollTo(0,0); try { sessionStorage.removeItem("mf_chave"); } catch(_){} } }
+function route(){ const t = location.hash === "#obrigado"; document.body.classList.toggle("thanks", t); if (t) { scrollTo(0,0); try { const em = sessionStorage.getItem("mf_email"); if (em) $("#obgEmail").textContent = em; sessionStorage.removeItem("mf_chave"); } catch(_){} } }
 addEventListener("hashchange", route); route();
 try{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});$$(".reveal").forEach(el=>io.observe(el));}catch(_){$$(".reveal").forEach(el=>el.classList.add("in"))}
 $("#backHome").addEventListener("click", () => { document.body.classList.remove("thanks"); });

@@ -10,7 +10,8 @@ const hoje = geracao ? (({ dia, mes, ano }) => ({ dia, mes, ano }))(parseData(ge
 const a = montarAnalise({ nome, dataNascimento: nasc, foco, hoje });
 const termos = conferirTermos(a.doc);
 if (termos.length) { console.error("Termos proibidos:", termos); process.exit(1); }
-const buf = await gerarPdf({ doc: a.doc, nomeExibicao: a.nomeExibicao, pedido: "AMOSTRA" });
+const exemplo = !!process.env.EXEMPLO;
+const buf = await gerarPdf({ doc: a.doc, nomeExibicao: a.nomeExibicao, pedido: exemplo ? "EXEMPLO FICTÍCIO" : "AMOSTRA", exemplo });
 const arq = saida || `amostra-${foco}.pdf`;
 fs.writeFileSync(arq, buf);
 console.log(JSON.stringify(a.revisao.calculo, null, 1));

@@ -8,6 +8,7 @@ process.env.STRIPE_SECRET_KEY = "sk_test_x";
 process.env.PRICE_VOCACIONAL = "price_v"; process.env.PRICE_RETOMADA = "price_r";
 process.env.SITE_URL = "https://mapeandofuturos.com";
 process.env.REVISOR_EMAIL = "celso@example.com";
+process.env.REVISAO_MANUAL = "sim"; // os primeiros testes cobrem o modo com aprovação de Celso
 
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -87,12 +88,15 @@ await t("Falha temporária de entrega é recuperada sem regenerar o PDF", async 
   delete process.env.MF_SIMULAR_FALHA_EMAIL;
   p = await processarPedido("MF-TESTE0002"); assert.equal(p.status, "entregue"); assert.equal(p.tentativasGeracao, 2); assert.equal(p.tentativasEntrega, 2);
 });
-await t("Sem revisão manual (REVISAO_MANUAL=nao): Retomada vai direto ao cliente", async () => {
-  process.env.REVISAO_MANUAL = "nao";
+await t("Padrão (entrega automática): vai direto ao cliente e Celso recebe uma cópia, sem duplicar", async () => {
+  delete process.env.REVISAO_MANUAL;
+  const antes = emails();
   await novoPedido("MF-TESTE0003", { foco: "retomada", nome: "José Carlos de Oliveira", dataNascimento: "03/05/1970" });
   await webhook(eventoPago("MF-TESTE0003", "evt_3"));
-  const p = await lerPedido("MF-TESTE0003"); assert.equal(p.status, "entregue");
-  delete process.env.REVISAO_MANUAL;
+  let p = await lerPedido("MF-TESTE0003"); assert.equal(p.status, "entregue"); assert.ok(p.copiaEnviadaEm);
+  assert.equal(emails() - antes, 2); // cliente + cópia
+  await webhook(eventoPago("MF-TESTE0003", "evt_4"));
+  p = await lerPedido("MF-TESTE0003"); assert.equal(p.status, "entregue"); assert.equal(emails() - antes, 2);
 });
 await t("Admin: token obrigatório; amostra gera PDF", async () => {
   let r = await admin(new Request("https://x/?acao=lista")); assert.equal(r.status, 401);
