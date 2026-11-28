@@ -1,3 +1,27 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  # O PDFKit lê arquivos de dados próprios em tempo de execução; por isso não é empacotado.
+  external_node_modules = ["pdfkit", "nodemailer"]
+  # Fontes Sora e Manrope usadas no PDF.
+  included_files = ["fonts/**"]
+
+# Arquivos internos que não devem ser servidos pelo site
+[[redirects]]
+  from = "/lib/*"
+  to = "/404"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/scripts/*"
+  to = "/404"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/netlify/*"
+  to = "/404"
+  status = 404
+  force = true
